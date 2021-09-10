@@ -1,0 +1,8 @@
+.toy-review-list {
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.toy-review-list>* {
+    max-width: 45%;
+}
