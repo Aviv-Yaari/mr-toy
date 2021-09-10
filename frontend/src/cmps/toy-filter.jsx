@@ -1,32 +1,58 @@
 import React, { Component } from 'react';
-import { Button, InputBase } from '@material-ui/core';
+import { Button, InputBase, MenuItem, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import Select from 'react-select';
+
+import '../css/toy-filter.css';
+import { toyService } from '../services/toy.service';
 
 export class ToyFilter extends Component {
-  state = { filter: { text: '', status: 'all' } };
+  async componentDidMount() {
+    this.allLabels = (await toyService.getLabels()).map(label => ({ label, value: label }));
+  }
 
   handleChange = ev => {
-    const { name, value } = ev.currentTarget;
-    this.setState(
-      prevState => ({ filter: { ...prevState.filter, [name]: value } }),
-      () => this.props.onSetFilter(this.state.filter)
-    );
+    const { name, value } = ev.target;
+    this.props.onSetFilter({ [name]: value });
+  };
+
+  handleLabelChange = ev => {
+    const labels = ev.map(label => label.value);
+    this.props.onSetFilter({ labels });
   };
 
   render() {
-    const { text, status } = this.state.filter;
+    const { name, inStock } = this.props.filter;
+    const { onClearFilters } = this.props;
     return (
       <section className="toy-filter flex">
-        <div className="search flex">
+        <div className="search flex align-center">
           <SearchIcon />
           <InputBase
             onChange={this.handleChange}
             placeholder="Search…"
-            name="text"
-            value={text}
+            name="name"
+            value={name}
             fullWidth
           />
         </div>
+        <div className="in-stock">
+          <TextField
+            variant="outlined"
+            size="small"
+            select
+            name="inStock"
+            value={inStock}
+            onChange={this.handleChange}>
+            <MenuItem value={true}>In stock</MenuItem>
+            <MenuItem value={false}>Out of stock</MenuItem>
+            <MenuItem value={'all'}>Stock</MenuItem>
+          </TextField>
+        </div>
+        <div className="labels">
+          <Select options={this.allLabels} isMulti onChange={this.handleLabelChange} />
+        </div>
+        <Button onClick={onClearFilters}>Clear</Button>
       </section>
     );
   }

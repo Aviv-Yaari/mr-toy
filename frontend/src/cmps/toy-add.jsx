@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
+import '../css/toy-add.css';
+
 export class ToyAdd extends Component {
   state = { toy: { name: '' } };
 
@@ -21,10 +23,11 @@ export class ToyAdd extends Component {
       <form className="toy-add" onSubmit={this.onAddToy}>
         <TextField
           variant="outlined"
+          fullWidth
           name="name"
           onChange={this.handleChange}
           value={name}
-          placeholder="Enter toy name"
+          placeholder="Add a Toy..."
         />
         <Button type="submit" className="add" variant="outlined">
           Add

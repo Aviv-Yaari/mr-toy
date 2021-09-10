@@ -1,17 +1,25 @@
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
 
-export const toyService = { getToys, create, remove, update };
+export const toyService = { getToys, create, remove, update, getLabels };
 
-let gLabels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor'];
+let gLabels = [
+  'On wheels',
+  'Box game',
+  'Battery Powered',
+  'Art',
+  'Baby',
+  'Doll',
+  'Puzzle',
+  'Outdoor',
+];
 let gToys = [
   {
     _id: 't101',
     name: 'Talking Doll',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
           quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde \
-          dolorem adipisci velit blanditiis modi consequuntur!',
+          dolorem adipisci velit blanditiis modi consequuntur!`,
     price: 123,
     labels: ['Doll', 'Battery Powered', 'Baby'],
     createdAt: 1631031801011,
@@ -21,10 +29,9 @@ let gToys = [
   {
     _id: 't102',
     name: 'Haha Doll',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
           quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde \
-          dolorem adipisci velit blanditiis modi consequuntur!',
+          dolorem adipisci velit blanditiis modi consequuntur!`,
     price: 123,
     labels: ['Battery Powered', 'Baby'],
     createdAt: 1631030801011,
@@ -35,28 +42,27 @@ let gToys = [
         author: 'aviv',
         createdAt: 1631030801011,
         title: 'Nice',
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
+        body: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
           quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde \
-          dolorem adipisci velit blanditiis modi consequuntur!',
+          dolorem adipisci velit blanditiis modi consequuntur!`,
       },
       {
         _id: 'r102',
         author: 'haviiv',
         createdAt: 1611010801011,
         title: 'Bad',
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
+        body: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
           quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde \
-          dolorem adipisci velit blanditiis modi consequuntur!',
+          dolorem adipisci velit blanditiis modi consequuntur!`,
       },
     ],
   },
   {
     _id: 't103',
     name: 'Talking Paul',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
-          quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde \
-          dolorem adipisci velit blanditiis modi consequuntur!',
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint
+          quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde
+          dolorem adipisci velit blanditiis modi consequuntur!`,
     price: 123,
     labels: ['Doll', 'Baby'],
     createdAt: 1631021801011,
@@ -65,13 +71,18 @@ let gToys = [
   },
 ];
 
+async function getLabels() {
+  return gLabels;
+}
+
 async function getToys(filter) {
-  const { status = 'all', text, id } = filter;
+  const { name, id, inStock, labels } = filter;
   const toys = _.cloneDeep(gToys);
   return toys.filter(
     toy =>
-      (status === 'all' || toy.status === status) &&
-      (!text || toy.text.toLowerCase().includes(text.toLowerCase())) &&
+      (inStock === 'all' || toy.inStock === inStock) &&
+      (!labels.length || labels.every(label => toy.labels.includes(label))) &&
+      (!name || toy.name.toLowerCase().includes(name.toLowerCase())) &&
       (!id || toy._id === id)
   );
 }

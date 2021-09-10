@@ -1,0 +1,17 @@
+.toy-filter {
+    margin: 20px 0;
+    gap: 20px;
+}
+
+.toy-filter .search {
+    background-color: rgb(240, 240, 240);
+}
+
+.toy-filter .labels {
+    min-width: 400px;
+    font-family: 'Roboto';
+}
+
+.toy-filter .labels>*:first-child {
+    width: 100%;
+}

@@ -30,7 +30,13 @@ export const updateToy = (toy, data) => {
 };
 
 export const setFilter = filter => {
-  return dispatch => {
+  return async dispatch => {
     dispatch({ type: 'SET_FILTER', filter });
+  };
+};
+
+export const clearFilter = () => {
+  return dispatch => {
+    dispatch({ type: 'SET_FILTER', filter: initialState.filter });
   };
 };

@@ -3,7 +3,14 @@ import { connect } from 'react-redux';
 import { ToyAdd } from '../cmps/toy-add';
 import { ToyFilter } from '../cmps/toy-filter';
 import { ToyList } from '../cmps/toy-list';
-import { loadToys, addToy, removeToy, updateToy, setFilter } from '../store/actions/toy.actions';
+import {
+  loadToys,
+  addToy,
+  removeToy,
+  updateToy,
+  setFilter,
+  clearFilter,
+} from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
 
 class _ToyApp extends Component {
@@ -32,17 +39,26 @@ class _ToyApp extends Component {
     this.props.history.push(`/toy/${_id}/edit`);
   };
 
-  onSetFilter = filter => {
-    this.props.setFilter();
-    this.props.loadToys(filter);
+  onSetFilter = async filter => {
+    await this.props.setFilter(filter);
+    this.props.loadToys(this.props.filter);
+  };
+
+  onClearFilters = () => {
+    this.props.clearFilter();
+    this.props.loadToys();
   };
 
   render() {
-    const { toys } = this.props;
+    const { toys, filter } = this.props;
     return (
       <main className="toy-app">
         <ToyAdd onAddToy={this.onAddToy} />
-        <ToyFilter onSetFilter={this.onSetFilter} />
+        <ToyFilter
+          filter={filter}
+          onSetFilter={this.onSetFilter}
+          onClearFilters={this.onClearFilters}
+        />
         <ToyList
           toys={toys}
           onRemoveToy={this.onRemoveToy}
@@ -65,6 +81,7 @@ const mapDispatchToProps = {
   removeToy,
   updateToy,
   setFilter,
+  clearFilter,
   showUserMsg,
 };
 

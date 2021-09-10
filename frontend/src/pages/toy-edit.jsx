@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, CircularProgress, Container, TextField } from '@material-ui/core';
 
-import { loadToys, removeToy } from '../store/actions/toy.actions';
+import { loadToys, updateToy, removeToy } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
-import { CircularProgress, Container, TextField } from '@material-ui/core';
 import { ToyLabelList } from '../cmps/toy-label-list';
+import '../css/toy-edit.css';
 
 class _ToyEdit extends Component {
   state = {
@@ -31,6 +32,14 @@ class _ToyEdit extends Component {
     this.setState(prevState => ({ form: { ...prevState.form, [name]: value } }));
   };
 
+  onSaveChanges = ev => {
+    const toy = this.props.toys[0];
+    ev.preventDefault();
+    this.props.updateToy(toy, { ...this.state.form });
+    this.props.showUserMsg('Toy details updated');
+    setTimeout(() => this.props.history.push(`/toy/${toy._id}`), 500); // simulate delay
+  };
+
   render() {
     if (!this.props.toys || !this.props.toys.length) return <CircularProgress />;
     const toy = this.props.toys[0];
@@ -45,27 +54,34 @@ class _ToyEdit extends Component {
             width="100%"
           />
           <ToyLabelList labels={labels} />
-          <TextField
-            fullWidth
-            label="Toy Name"
-            value={name}
-            name="name"
-            onChange={this.handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Toy Description"
-            value={description}
-            name="description"
-            onChange={this.handleChange}
-          />
-          <TextField
-            fullWidth
-            label="Price"
-            value={price}
-            name="price"
-            onChange={this.handleChange}
-          />
+          <form onSubmit={this.onSaveChanges}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Toy Name"
+              value={name}
+              name="name"
+              onChange={this.handleChange}
+            />
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Toy Description"
+              multiline
+              value={description}
+              name="description"
+              onChange={this.handleChange}
+            />
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Price"
+              value={price}
+              name="price"
+              onChange={this.handleChange}
+            />
+            <Button type="submit">Save Changes</Button>
+          </form>
         </Container>
       </>
     );
@@ -79,6 +95,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   loadToys,
+  updateToy,
   removeToy,
   showUserMsg,
 };

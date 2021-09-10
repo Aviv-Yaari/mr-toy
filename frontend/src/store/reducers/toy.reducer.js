@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export const initialState = {
   toys: null,
-  filter: { status: 'all', text: '' },
+  filter: { name: '', inStock: 'all', labels: [] },
 };
 
 export function toyReducer(state = initialState, action) {
@@ -24,8 +24,7 @@ export function toyReducer(state = initialState, action) {
       if (idx !== -1) stateCopy.toys[idx] = { ...stateCopy.toys[idx], ...action.data };
       break;
     case 'SET_FILTER':
-      stateCopy.filter = action.filter;
-      break;
+      return { ...state, filter: { ...state.filter, ...action.filter } };
     default:
       break;
   }
