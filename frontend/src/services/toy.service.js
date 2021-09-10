@@ -76,15 +76,16 @@ async function getLabels() {
 }
 
 async function getToys(filter) {
-  const { name, id, inStock, labels } = filter;
-  const toys = _.cloneDeep(gToys);
-  return toys.filter(
+  const { name, id, inStock = 'all', labels = [] } = filter;
+  const res = gToys.filter(
     toy =>
       (inStock === 'all' || toy.inStock === inStock) &&
       (!labels.length || labels.every(label => toy.labels.includes(label))) &&
       (!name || toy.name.toLowerCase().includes(name.toLowerCase())) &&
       (!id || toy._id === id)
   );
+  console.log('res', res);
+  return res;
 }
 
 async function create(toy) {
