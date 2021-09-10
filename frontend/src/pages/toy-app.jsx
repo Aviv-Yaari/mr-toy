@@ -10,8 +10,10 @@ import {
   updateToy,
   setFilter,
   clearFilter,
+  sortField,
 } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
+import { ToySort } from '../cmps/toy-sort';
 
 class _ToyApp extends Component {
   async componentDidMount() {
@@ -49,8 +51,13 @@ class _ToyApp extends Component {
     this.props.loadToys();
   };
 
+  onSortField = async field => {
+    await this.props.sortField(field);
+    this.props.loadToys(undefined, this.props.sort);
+  };
+
   render() {
-    const { toys, filter } = this.props;
+    const { toys, filter, sort } = this.props;
     return (
       <main className="toy-app">
         <ToyAdd onAddToy={this.onAddToy} />
@@ -59,6 +66,7 @@ class _ToyApp extends Component {
           onSetFilter={this.onSetFilter}
           onClearFilters={this.onClearFilters}
         />
+        <ToySort onSortField={this.onSortField} sort={sort} />
         <ToyList
           toys={toys}
           onRemoveToy={this.onRemoveToy}
@@ -71,8 +79,8 @@ class _ToyApp extends Component {
 }
 
 const mapStateToProps = state => {
-  const { toys, filter } = state.toyModule;
-  return { toys, filter };
+  const { toys, filter, sort } = state.toyModule;
+  return { toys, filter, sort };
 };
 
 const mapDispatchToProps = {
@@ -83,6 +91,7 @@ const mapDispatchToProps = {
   setFilter,
   clearFilter,
   showUserMsg,
+  sortField,
 };
 
 export const ToyApp = connect(mapStateToProps, mapDispatchToProps)(_ToyApp);

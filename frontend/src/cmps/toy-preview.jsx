@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import moment from 'moment';
 
 import { ToyLabelList } from './toy-label-list';
 import { ToyActions } from './toy-actions';
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
 
 export const ToyPreview = props => {
   const { toy, onToyClick, onRemoveToy, onToyEdit } = props;
-  const { name, price, labels, inStock } = toy;
+  const { name, price, labels, inStock, createdAt } = toy;
   const classes = useStyles();
 
   return (
@@ -44,6 +45,9 @@ export const ToyPreview = props => {
           </Typography>
           <Typography variant="h6" component="h3">
             {price}$
+          </Typography>
+          <Typography gutterBottom variant="body2" color="textSecondary" component="p">
+            {moment(createdAt).format('MMMM Do YYYY')}
           </Typography>
         </CardContent>
       </CardActionArea>

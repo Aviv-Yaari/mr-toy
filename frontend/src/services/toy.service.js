@@ -16,11 +16,11 @@ let gLabels = [
 let gToys = [
   {
     _id: 't101',
-    name: 'Talking Doll',
+    name: 'A Doll',
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
           quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde \
           dolorem adipisci velit blanditiis modi consequuntur!`,
-    price: 123,
+    price: 15,
     labels: ['Doll', 'Battery Powered', 'Baby'],
     createdAt: 1631031801011,
     inStock: true,
@@ -28,13 +28,13 @@ let gToys = [
   },
   {
     _id: 't102',
-    name: 'Haha Doll',
+    name: 'Cool Doll',
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint \
           quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde \
           dolorem adipisci velit blanditiis modi consequuntur!`,
-    price: 123,
+    price: 999,
     labels: ['Battery Powered', 'Baby'],
-    createdAt: 1631030801011,
+    createdAt: 1531030801011,
     inStock: false,
     reviews: [
       {
@@ -59,11 +59,11 @@ let gToys = [
   },
   {
     _id: 't103',
-    name: 'Talking Paul',
+    name: 'Big Paul',
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint
           quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde
           dolorem adipisci velit blanditiis modi consequuntur!`,
-    price: 123,
+    price: 10000,
     labels: ['Doll', 'Baby'],
     createdAt: 1631021801011,
     inStock: true,
@@ -75,16 +75,17 @@ async function getLabels() {
   return gLabels;
 }
 
-async function getToys(filter) {
+async function getToys(filter, sort) {
   const { name, id, inStock = 'all', labels = [] } = filter;
-  const res = gToys.filter(
+  let res = gToys.filter(
     toy =>
       (inStock === 'all' || toy.inStock === inStock) &&
       (!labels.length || labels.every(label => toy.labels.includes(label))) &&
       (!name || toy.name.toLowerCase().includes(name.toLowerCase())) &&
       (!id || toy._id === id)
   );
-  console.log('res', res);
+  console.log(sort);
+  if (sort) res = res.sort((a, b) => (a[sort.field] < b[sort.field] ? sort.type : sort.type * -1));
   return res;
 }
 

@@ -1,9 +1,9 @@
 import { toyService } from '../../services/toy.service';
 import { initialState } from '../reducers/toy.reducer';
 
-export const loadToys = (filter = initialState.filter) => {
+export const loadToys = (filter = initialState.filter, sort) => {
   return async dispatch => {
-    const toys = await toyService.getToys(filter);
+    const toys = await toyService.getToys(filter, sort);
     dispatch({ type: 'SET_TOYS', toys });
   };
 };
@@ -38,5 +38,11 @@ export const setFilter = filter => {
 export const clearFilter = () => {
   return dispatch => {
     dispatch({ type: 'SET_FILTER', filter: initialState.filter });
+  };
+};
+
+export const sortField = field => {
+  return async dispatch => {
+    dispatch({ type: 'SORT_FIELD', field });
   };
 };

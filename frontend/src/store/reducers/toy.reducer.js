@@ -3,6 +3,7 @@ import _ from 'lodash';
 export const initialState = {
   toys: null,
   filter: { name: '', inStock: 'all', labels: [] },
+  sort: { field: 'createdAt', type: 1 },
 };
 
 export function toyReducer(state = initialState, action) {
@@ -25,6 +26,10 @@ export function toyReducer(state = initialState, action) {
       break;
     case 'SET_FILTER':
       return { ...state, filter: { ...state.filter, ...action.filter } };
+    case 'SORT_FIELD':
+      const currSortType = state.sort.type;
+      const newSortType = currSortType === 1 ? -1 : 1;
+      return { ...state, sort: { field: action.field, type: newSortType } };
     default:
       break;
   }
