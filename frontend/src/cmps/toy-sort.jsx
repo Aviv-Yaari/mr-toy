@@ -1,7 +1,7 @@
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
-import { Button, IconButton, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import { Component } from 'react';
 
 import '../css/toy-sort.css';

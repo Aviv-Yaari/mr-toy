@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ToyAdd } from '../cmps/toy-add';
 import { ToyFilter } from '../cmps/toy-filter';
 import { ToyList } from '../cmps/toy-list';
 import {
@@ -20,11 +19,6 @@ class _ToyApp extends Component {
     await new Promise(resolve => setTimeout(resolve, 500));
     this.props.loadToys();
   }
-
-  onAddToy = toy => {
-    this.props.addToy(toy);
-    this.props.showUserMsg('Toy added');
-  };
 
   onRemoveToy = toy => {
     this.props.removeToy(toy);
@@ -60,7 +54,6 @@ class _ToyApp extends Component {
     const { toys, filter, sort } = this.props;
     return (
       <main className="toy-app">
-        <ToyAdd onAddToy={this.onAddToy} />
         <ToyFilter
           filter={filter}
           onSetFilter={this.onSetFilter}

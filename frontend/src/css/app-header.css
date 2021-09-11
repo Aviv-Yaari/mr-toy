@@ -1,0 +1,15 @@
+.app-header {
+    display: flex;
+    border-bottom: 1px solid #f5f5f5;
+    box-shadow: 0 0 11px 0 #f5f5f5
+}
+
+.app-header .logo {
+    border-right: 1px solid rgb(216, 216, 216);
+    padding-right: 10px;
+}
+
+.app-header a {
+    text-decoration: none;
+    color: unset;
+}

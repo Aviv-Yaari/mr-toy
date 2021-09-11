@@ -25,7 +25,7 @@ export class ToyFilter extends Component {
     const { name, inStock } = this.props.filter;
     const { onClearFilters } = this.props;
     return (
-      <section className="toy-filter flex">
+      <section className="toy-filter flex main-layout">
         <div className="search flex align-center">
           <SearchIcon />
           <InputBase
@@ -50,7 +50,12 @@ export class ToyFilter extends Component {
           </TextField>
         </div>
         <div className="labels">
-          <Select options={this.allLabels} isMulti onChange={this.handleLabelChange} />
+          <Select
+            placeholder="Labels"
+            options={this.allLabels}
+            isMulti
+            onChange={this.handleLabelChange}
+          />
         </div>
         <Button onClick={onClearFilters}>Clear</Button>
       </section>

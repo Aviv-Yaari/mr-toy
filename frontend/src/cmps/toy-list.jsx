@@ -1,6 +1,6 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { ToyPreview } from './toy-preview';
-import classes from '../css/toy-list.module.css';
+import '../css/toy-list.css';
 
 export const ToyList = props => {
   const { toys, onRemoveToy, onToggleToy, onToyClick, onToyEdit } = props;
@@ -11,7 +11,7 @@ export const ToyList = props => {
       </div>
     );
   return (
-    <section className={classes['toy-list']}>
+    <section className="toy-list main-layout">
       {toys.map(toy => (
         <ToyPreview
           key={toy._id}

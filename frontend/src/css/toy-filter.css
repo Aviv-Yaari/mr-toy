@@ -5,6 +5,7 @@
 
 .toy-filter .search {
     background-color: rgb(240, 240, 240);
+    min-width: 400px;
 }
 
 .toy-filter .labels {

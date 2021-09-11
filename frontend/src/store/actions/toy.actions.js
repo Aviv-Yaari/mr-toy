@@ -8,10 +8,16 @@ export const loadToys = (filter = initialState.filter, sort) => {
   };
 };
 
-export const addToy = inputToy => {
+export const getToyById = id => {
   return async dispatch => {
-    const toy = await toyService.create(inputToy);
-    dispatch({ type: 'ADD_TOY', toy });
+    const toy = await toyService.getToyById(id);
+    dispatch({ type: 'SET_TOYS', toys: [toy] });
+  };
+};
+
+export const addToy = toy => {
+  return async dispatch => {
+    await toyService.create(toy);
   };
 };
 
@@ -22,10 +28,10 @@ export const removeToy = toy => {
   };
 };
 
-export const updateToy = (toy, data) => {
+export const updateToy = toy => {
   return async dispatch => {
-    await toyService.update(toy._id, data);
-    dispatch({ type: 'UPDATE_TOY', id: toy._id, data });
+    await toyService.update(toy);
+    dispatch({ type: 'UPDATE_TOY', toy });
   };
 };
 

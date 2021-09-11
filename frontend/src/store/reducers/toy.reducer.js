@@ -13,16 +13,13 @@ export function toyReducer(state = initialState, action) {
     case 'SET_TOYS':
       stateCopy.toys = action.toys;
       break;
-    case 'ADD_TOY':
-      stateCopy.toys.push(action.toy);
-      break;
     case 'REMOVE_TOY':
       idx = stateCopy.toys.findIndex(toy => toy._id === action.id);
       if (idx !== -1) stateCopy.toys.splice(idx, 1);
       break;
     case 'UPDATE_TOY':
-      idx = stateCopy.toys.findIndex(toy => toy._id === action.id);
-      if (idx !== -1) stateCopy.toys[idx] = { ...stateCopy.toys[idx], ...action.data };
+      idx = stateCopy.toys.findIndex(toy => toy._id === action.toy._id);
+      if (idx !== -1) stateCopy.toys[idx] = action.toy;
       break;
     case 'SET_FILTER':
       return { ...state, filter: { ...state.filter, ...action.filter } };

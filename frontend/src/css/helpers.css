@@ -1,3 +1,7 @@
+.main-layout {
+    padding-left: 8px;
+}
+
 .flex {
     display: flex;
 }

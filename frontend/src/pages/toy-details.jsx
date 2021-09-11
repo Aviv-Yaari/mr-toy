@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadToys, removeToy } from '../store/actions/toy.actions';
+import { getToyById, removeToy } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
 import classes from '../css/toy-details.module.css';
 import { ToyActions } from '../cmps/toy-actions';
@@ -19,7 +19,7 @@ class _ToyDetails extends Component {
 
   loadToy = () => {
     const { id } = this.props.match.params;
-    this.props.loadToys({ id });
+    this.props.getToyById(id);
   };
 
   onRemoveToy = toy => {
@@ -77,7 +77,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  loadToys,
+  getToyById,
   removeToy,
   showUserMsg,
 };

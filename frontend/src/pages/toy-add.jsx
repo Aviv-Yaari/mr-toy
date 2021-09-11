@@ -1,40 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, CircularProgress, Container, MenuItem, TextField } from '@material-ui/core';
 import Select from 'react-select';
+import { Button, Container, MenuItem, TextField, Typography } from '@material-ui/core';
 
-import { getToyById, updateToy, removeToy } from '../store/actions/toy.actions';
+import { addToy } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
-import '../css/toy-edit.css';
+import '../css/toy-add.css';
 import { toyService } from '../services/toy.service';
 
-class _ToyEdit extends Component {
+class _ToyAdd extends Component {
   state = {
     form: {
-      name: '',
-      description: '',
-      price: '',
+      name: 'The cool doll',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?',
+      price: 156,
       inStock: true,
       labels: [],
     },
   };
 
-  componentDidMount() {
-    this.loadToy();
-    this.loadLabels();
-  }
-
-  loadToy = async () => {
-    const { id } = this.props.match.params;
-    await this.props.getToyById(id);
-    const { name, description, price, inStock, labels } = this.props.toys[0];
-    this.setState({ form: { name, description, price, inStock, labels } });
-  };
-
-  loadLabels = async () => {
+  async componentDidMount() {
     const allLabels = (await toyService.getLabels()).map(label => ({ label, value: label }));
     this.setState({ allLabels });
-  };
+  }
 
   handleChange = ev => {
     let { name, value } = ev.target;
@@ -47,28 +36,25 @@ class _ToyEdit extends Component {
     this.setState(prevState => ({ form: { ...prevState.form, labels } }));
   };
 
-  onSaveChanges = ev => {
+  onAddToy = async ev => {
     ev.preventDefault();
-    let toy = this.props.toys[0];
-    toy = { ...toy, ...this.state.form };
-    this.props.updateToy(toy);
-    this.props.showUserMsg('Toy details updated');
-    setTimeout(() => this.props.history.push(`/toy/${toy._id}`), 500); // simulate delay
+    const toy = { ...this.state.form };
+    this.props.showUserMsg('Adding..');
+    await this.props.addToy(toy);
+    this.props.showUserMsg('Toy Added');
+    setTimeout(() => this.props.history.push('/toy'), 500); // simulate delay
   };
 
   render() {
-    if (!this.props.toys || !this.props.toys.length) return <CircularProgress />;
     const { allLabels } = this.state;
-    const { name, description, price, inStock, labels } = this.state.form;
+    const { name, description, price, inStock } = this.state.form;
     return (
       <>
-        <Container className="toy-edit" maxWidth="md">
-          <img
-            src="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-            alt=""
-            width="100%"
-          />
-          <form onSubmit={this.onSaveChanges}>
+        <Container className="toy-add" maxWidth="md">
+          <Typography variant="h3" gutterBottom>
+            Add Toy
+          </Typography>
+          <form onSubmit={this.onAddToy}>
             <TextField
               fullWidth
               variant="outlined"
@@ -107,17 +93,16 @@ class _ToyEdit extends Component {
               <MenuItem value={false}>Out of stock</MenuItem>
             </TextField>
             <div className="labels">
-              {allLabels && labels.length && (
+              {allLabels && (
                 <Select
                   placeholder="Labels"
                   options={allLabels}
                   isMulti
                   onChange={this.handleLabelChange}
-                  defaultValue={labels.map(label => ({ label, value: label }))}
                 />
               )}
             </div>
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit">Add Toy</Button>
           </form>
         </Container>
       </>
@@ -131,10 +116,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  getToyById,
-  updateToy,
-  removeToy,
+  addToy,
   showUserMsg,
 };
 
-export const ToyEdit = connect(mapStateToProps, mapDispatchToProps)(_ToyEdit);
+export const ToyAdd = connect(mapStateToProps, mapDispatchToProps)(_ToyAdd);

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 export const ToyPreview = props => {
   const { toy, onToyClick, onRemoveToy, onToyEdit } = props;
-  const { name, price, labels, inStock, createdAt } = toy;
+  const { name, price, labels, inStock, createdAt, description } = toy;
   const classes = useStyles();
 
   return (
@@ -39,9 +39,7 @@ export const ToyPreview = props => {
             {!inStock && ' - Out of Stock!'}
           </Typography>
           <Typography gutterBottom variant="body2" color="textSecondary" component="p">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit debitis aliquid
-            voluptatem, harum laudantium culpa fuga earum blanditiis facilis inventore quaerat
-            recusandae ab, nulla quasi exercitationem ipsa! Hic, provident?
+            {description}
           </Typography>
           <Typography variant="h6" component="h3">
             {price}$
