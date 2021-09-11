@@ -1,0 +1,90 @@
+[
+  {
+    "_id": "t102",
+    "name": "Cool Doll",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde dolorem adipisci velit blanditiis modi consequuntur!",
+    "price": 999,
+    "labels": [
+      "Battery Powered",
+      "Baby"
+    ],
+    "createdAt": 1531030801011,
+    "inStock": true,
+    "reviews": [
+      {
+        "_id": "r101",
+        "author": "aviv",
+        "createdAt": 1631030801011,
+        "title": "Nice",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde dolorem adipisci velit blanditiis modi consequuntur!"
+      },
+      {
+        "_id": "r102",
+        "author": "haviiv",
+        "createdAt": 1611010801011,
+        "title": "Bad",
+        "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde dolorem adipisci velit blanditiis modi consequuntur!"
+      }
+    ]
+  },
+  {
+    "_id": "446ed1e8-52db-496e-ac0f-dcf48c1acb78",
+    "name": "Such a cool doll!",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde dolorem adipisci velit blanditiis modi consequuntur!",
+    "price": 152,
+    "labels": [
+      "Doll",
+      "Baby",
+      "Art"
+    ],
+    "inStock": false,
+    "createdAt": 1631347988010,
+    "reviews": []
+  },
+  {
+    "_id": "b8b83a7c-2cef-424b-8d4f-0142fbc5fe8e",
+    "name": "The cool doll",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?",
+    "price": 156,
+    "inStock": true,
+    "labels": [
+      "On wheels",
+      "Battery Powered"
+    ],
+    "createdAt": 1631353865803,
+    "reviews": []
+  },
+  {
+    "_id": "420cd1f2-d0bb-4233-a582-343f4bded997",
+    "name": "The cool doll",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?",
+    "price": 156,
+    "inStock": true,
+    "labels": [
+      "On wheels",
+      "Battery Powered"
+    ],
+    "createdAt": 1631354433638,
+    "reviews": []
+  },
+  {
+    "_id": "e9df6a3e-fed2-4829-8f15-d32b57a99f85",
+    "name": "Aviv Aviv",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?",
+    "price": 987987987,
+    "inStock": false,
+    "labels": [],
+    "createdAt": 1631354445071,
+    "reviews": []
+  },
+  {
+    "_id": "c5af5e6c-300f-41ce-ae29-712610649324",
+    "name": "The cool doll",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?",
+    "price": 156,
+    "inStock": true,
+    "labels": [],
+    "createdAt": 1631354454343,
+    "reviews": []
+  }
+]
