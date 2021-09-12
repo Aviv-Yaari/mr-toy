@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const toyService = require('./services/toy.service');
@@ -19,7 +18,7 @@ app.use(
     cookie: { secure: false },
   })
 );
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 app.use(express.static('public'));

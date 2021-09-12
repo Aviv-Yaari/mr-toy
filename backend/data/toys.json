@@ -1,8 +1,10 @@
 [
   {
+    "0": "Battery Powered",
+    "1": "Baby",
     "_id": "t102",
-    "name": "Cool Doll",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde dolorem adipisci velit blanditiis modi consequuntur!",
+    "name": "With reviews!",
+    "description": "The well known toy returns! and this time - with reviews",
     "price": 999,
     "labels": [
       "Battery Powered",
@@ -29,7 +31,7 @@
   },
   {
     "_id": "446ed1e8-52db-496e-ac0f-dcf48c1acb78",
-    "name": "Such a cool doll!",
+    "name": "Such a cool doll!!",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quaerat sint quisquam explicabo repellendus iste, fugit qui maxime aut id autem ex praesentium unde dolorem adipisci velit blanditiis modi consequuntur!",
     "price": 152,
     "labels": [
@@ -43,14 +45,11 @@
   },
   {
     "_id": "b8b83a7c-2cef-424b-8d4f-0142fbc5fe8e",
-    "name": "The cool doll",
+    "name": "The COOLEST doll",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?",
-    "price": 156,
+    "price": 1561,
     "inStock": true,
-    "labels": [
-      "On wheels",
-      "Battery Powered"
-    ],
+    "labels": [],
     "createdAt": 1631353865803,
     "reviews": []
   },
@@ -78,13 +77,29 @@
     "reviews": []
   },
   {
-    "_id": "c5af5e6c-300f-41ce-ae29-712610649324",
-    "name": "The cool doll",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?",
-    "price": 156,
+    "_id": "0e6c705f-0d29-4303-8af4-92d5aadb6108",
+    "name": "Car Puzzle",
+    "description": "Come solve this difficult car puzzle",
+    "price": 20202,
     "inStock": true,
-    "labels": [],
-    "createdAt": 1631354454343,
+    "labels": [
+      "On wheels",
+      "Puzzle"
+    ],
+    "createdAt": 1631354864959,
+    "reviews": []
+  },
+  {
+    "_id": "f35dbaf7-b7b0-4fe9-8580-4f0b845f1f0e",
+    "name": "Aviv's Doll",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?",
+    "price": 150,
+    "inStock": true,
+    "labels": [
+      "On wheels",
+      "Doll"
+    ],
+    "createdAt": 1631449904518,
     "reviews": []
   }
 ]

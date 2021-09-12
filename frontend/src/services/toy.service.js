@@ -22,34 +22,37 @@ let gLabels = [
   'Outdoor',
 ];
 
+const BASE_URL =
+  process.env.NODE_ENV == 'production' ? '/api/toy' : 'http://localhost:3030/api/toy';
+
 async function getLabels() {
   return gLabels;
 }
 
 async function getToys(criteria, sort) {
-  const res = await axios.get('http://localhost:3030/api/toy', {
+  const res = await axios.get(BASE_URL, {
     params: { criteria, sort },
   });
   return res.data;
 }
 
 async function getToyById(id) {
-  const res = await axios.get(`http://localhost:3030/api/toy/${id}`);
+  const res = await axios.get(`${BASE_URL}/${id}`);
   return res.data;
 }
 
 async function create(toy) {
-  const res = await axios.post('http://localhost:3030/api/toy/', toy);
+  const res = await axios.post(BASE_URL, toy);
   return res.data;
 }
 
 async function remove(id) {
-  const res = await axios.delete(`http://localhost:3030/api/toy/${id}`);
+  const res = await axios.delete(`${BASE_URL}/${id}`);
   return res.data;
 }
 
 async function update(toy) {
-  const res = await axios.post('http://localhost:3030/api/toy/', toy);
+  const res = await axios.post(BASE_URL, toy);
   return res.data;
 }
 
