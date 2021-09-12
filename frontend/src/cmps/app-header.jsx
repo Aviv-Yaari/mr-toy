@@ -7,18 +7,19 @@ import '../css/app-header.css';
 export class AppHeader extends Component {
   render() {
     return (
-      <header className="app-header flex">
-        <Button size="large">
-          <NavLink className="logo" to="/">
-            Mr.Toy
-          </NavLink>
-        </Button>
-        <Button>
-          <NavLink to="/toy/add">Add Toy</NavLink>
-        </Button>
-        <Button>
-          <NavLink to="/toy/dashboard">Dashboard</NavLink>
-        </Button>
+      <header className="app-header flex align-center">
+        <NavLink className="logo" to="/">
+          <Button size="large">Mr.Toy</Button>
+        </NavLink>
+        <NavLink to="/toy/add">
+          <Button>Add Toy</Button>
+        </NavLink>
+        <NavLink to="/toy/dashboard">
+          <Button>Dashboard</Button>
+        </NavLink>
+        <NavLink to="/toy/about">
+          <Button>About</Button>
+        </NavLink>
       </header>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { Pie } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import { loadToys } from '../store/actions/toy.actions';
@@ -32,7 +32,7 @@ class _ToyDashboard extends Component {
   render() {
     const { labelChartData, yearChartData } = this.state;
     return (
-      <main className="toy-dashboard">
+      <Container className="toy-dashboard" maxWidth="md">
         <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
           Dashboard
         </Typography>
@@ -50,7 +50,7 @@ class _ToyDashboard extends Component {
             <Pie data={yearChartData} />
           </section>
         </div>
-      </main>
+      </Container>
     );
   }
 }

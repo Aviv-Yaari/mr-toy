@@ -1,0 +1,16 @@
+.branch-marker {
+    background-color: white;
+    position: absolute;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    padding: 6px;
+    width: max-content;
+}
+
+.branch-marker span {
+    display: none;
+}
+
+.branch-marker:hover span {
+    display: unset;
+}

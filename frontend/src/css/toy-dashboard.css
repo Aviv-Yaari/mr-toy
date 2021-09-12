@@ -1,6 +1,7 @@
 .toy-dashboard .chart {
     border: 1px solid rgb(241, 241, 241);
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
 }
 
 .charts-container {
