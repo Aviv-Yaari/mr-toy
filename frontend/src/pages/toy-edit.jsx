@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, CircularProgress, Container, MenuItem, TextField } from '@material-ui/core';
 import Select from 'react-select';
 
-import { getToyById, updateToy, removeToy } from '../store/actions/toy.actions';
+import { getToyById, updateToy } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
 import '../css/toy-edit.css';
 import { toyService } from '../services/toy.service';
@@ -133,7 +133,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   getToyById,
   updateToy,
-  removeToy,
   showUserMsg,
 };
 

@@ -1,21 +1,60 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import { Button, Container, MenuItem, TextField, Typography } from '@material-ui/core';
 import * as yup from 'yup';
 import { Formik } from 'formik';
+import Select from 'react-select';
 
-import { addToy } from '../store/actions/toy.actions';
+import { toyService } from '../services/toy.service';
+import { getToyById, addToy, updateToy } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
 import '../css/toy-add.css';
-import { toyService } from '../services/toy.service';
 
-class _ToyAdd extends Component {
-  state = { form: { labels: [] } };
-  async componentDidMount() {
+class _ToyAddEdit extends Component {
+  initialState = {
+    isEdit: false,
+    allLabels: [],
+    formInit: {
+      name: 'The cool doll',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?',
+      price: 150,
+      inStock: true,
+    },
+    labels: [],
+  };
+  state = this.initialState;
+
+  componentDidMount() {
+    this.loadPageData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.match.path !== prevProps.match.path) this.loadPageData();
+  }
+
+  loadPageData = async () => {
+    const { path } = this.props.match;
+    this.loadLabels();
+    if (path.includes('/edit')) {
+      this.loadToy();
+      this.setState({ isEdit: true }, this.formSettings());
+    } else {
+      this.setState(this.initialState, this.formSettings());
+    }
+  };
+
+  loadToy = async () => {
+    const { id } = this.props.match.params;
+    await this.props.getToyById(id);
+    const { name, description, price, inStock, labels } = this.props.toys[0];
+    this.setState({ formInit: { name, description, price, inStock }, labels });
+  };
+
+  loadLabels = async () => {
     const allLabels = (await toyService.getLabels()).map(label => ({ label, value: label }));
     this.setState({ allLabels });
-  }
+  };
 
   formSettings = () => {
     this.validationSchema = yup.object({
@@ -29,43 +68,49 @@ class _ToyAdd extends Component {
         .min(10, 'Description must be 10 letters or longer'),
       price: yup.number('Enter Price').required('Price is required'),
     });
-
-    this.initialValues = {
-      name: 'The cool doll',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate facere iusto sapiente ad, est animi quidem ex numquam? Quis quibusdam ratione qui provident sequi quasi voluptate, velit commodi illo minima?',
-      price: 150,
-      inStock: true,
-      labels: [],
-    };
   };
 
   handleLabelChange = ev => {
     const labels = ev.map(label => label.value);
-    this.setState(prevState => ({ form: { ...prevState.form, labels } }));
+    this.setState({ labels });
   };
 
   onAddToy = async values => {
-    const toy = { ...values, labels: this.state.form.labels };
+    const { labels } = this.state;
+    const toy = { ...values, labels };
     this.props.showUserMsg('Adding..');
     await this.props.addToy(toy);
     this.props.showUserMsg('Toy Added');
     setTimeout(() => this.props.history.push('/toy'), 500); // simulate delay
   };
 
+  onSaveChanges = async values => {
+    const { labels } = this.state;
+    let toy = this.props.toys[0];
+    toy = { ...toy, ...values, labels };
+    this.props.showUserMsg('Updating..');
+    await this.props.updateToy(toy);
+    this.props.showUserMsg('Toy details updated');
+    setTimeout(() => this.props.history.push(`/toy/${toy._id}`), 500); // simulate delay
+  };
+
+  onSubmit = values => {
+    this.state.isEdit ? this.onSaveChanges(values) : this.onAddToy(values);
+  };
+
   render() {
-    const { allLabels } = this.state;
-    this.formSettings();
+    const { allLabels, isEdit, labels } = this.state;
     return (
       <>
         <Container className="toy-add" maxWidth="md">
           <Typography variant="h3" gutterBottom>
-            Add Toy
+            {isEdit ? 'Edit Toy' : 'Add Toy'}
           </Typography>
           <Formik
-            initialValues={this.initialValues}
+            enableReinitialize
+            initialValues={this.state.formInit}
             validationSchema={this.validationSchema}
-            onSubmit={this.onAddToy}>
+            onSubmit={this.onSubmit}>
             {({ values, errors, touched, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <TextField
@@ -114,7 +159,18 @@ class _ToyAdd extends Component {
                   <MenuItem value={false}>Out of stock</MenuItem>
                 </TextField>
                 <div className="labels">
-                  {allLabels && (
+                  {allLabels && labels.length ? (
+                    <Select
+                      placeholder="Labels"
+                      options={allLabels}
+                      isMulti
+                      onChange={this.handleLabelChange}
+                      defaultValue={labels.map(label => ({ label, value: label }))}
+                    />
+                  ) : (
+                    <React.Fragment />
+                  )}
+                  {allLabels && !labels.length && (
                     <Select
                       placeholder="Labels"
                       options={allLabels}
@@ -123,7 +179,7 @@ class _ToyAdd extends Component {
                     />
                   )}
                 </div>
-                <Button type="submit">Add Toy</Button>
+                <Button type="submit">{isEdit ? 'Edit Toy' : 'Add Toy'}</Button>
               </form>
             )}
           </Formik>
@@ -139,8 +195,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
+  getToyById,
   addToy,
+  updateToy,
   showUserMsg,
 };
 
-export const ToyAdd = connect(mapStateToProps, mapDispatchToProps)(_ToyAdd);
+export const ToyAddEdit = connect(mapStateToProps, mapDispatchToProps)(_ToyAddEdit);

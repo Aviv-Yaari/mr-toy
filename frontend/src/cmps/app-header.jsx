@@ -16,6 +16,9 @@ export class AppHeader extends Component {
         <Button>
           <NavLink to="/toy/add">Add Toy</NavLink>
         </Button>
+        <Button>
+          <NavLink to="/toy/dashboard">Dashboard</NavLink>
+        </Button>
       </header>
     );
   }

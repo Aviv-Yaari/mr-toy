@@ -16,7 +16,6 @@ import { ToySort } from '../cmps/toy-sort';
 
 class _ToyApp extends Component {
   async componentDidMount() {
-    await new Promise(resolve => setTimeout(resolve, 500));
     this.props.loadToys();
   }
 

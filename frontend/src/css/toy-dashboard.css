@@ -1,0 +1,8 @@
+.toy-dashboard .chart {
+    border: 1px solid rgb(241, 241, 241);
+    width: 400px;
+}
+
+.charts-container {
+    gap: 20px;
+}
