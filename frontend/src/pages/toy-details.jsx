@@ -42,7 +42,7 @@ class _ToyDetails extends Component {
 
     return (
       <>
-        <main className="main-container">
+        <main>
           <section className="toy-details container">
             <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
               {name} {!inStock && ' - Out of Stock!'}
