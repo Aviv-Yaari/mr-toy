@@ -3,7 +3,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
-import '../css/toy-review-list.css';
 import moment from 'moment';
 
 export const ToyReviewList = props => {

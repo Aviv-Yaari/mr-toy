@@ -1,5 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
-
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,25 +9,14 @@ import moment from 'moment';
 import { ToyLabelList } from './toy-label-list';
 import { ToyActions } from './toy-actions';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
-});
-
 export const ToyPreview = props => {
   const { toy, onToyClick, onRemoveToy, onToyEdit } = props;
   const { name, price, labels, inStock, createdAt, description } = toy;
-  const classes = useStyles();
-
   return (
-    <Card className={classes.root}>
+    <Card className="toy-preview">
       <CardActionArea onClick={() => onToyClick(toy)}>
         <CardMedia
-          className={classes.media}
+          className="media"
           image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
           title="Contemplative Reptile"
         />

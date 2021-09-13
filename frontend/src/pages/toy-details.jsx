@@ -1,4 +1,3 @@
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { Component } from 'react';
@@ -7,7 +6,6 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 import { getToyById, removeToy } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
-import classes from '../css/toy-details.module.css';
 import { ToyActions } from '../cmps/toy-actions';
 import { ToyLabelList } from '../cmps/toy-label-list';
 import { ToyReviewList } from '../cmps/toy-review-list';
@@ -44,14 +42,14 @@ class _ToyDetails extends Component {
 
     return (
       <>
-        <main className={classes['main-container']}>
-          <Container className={classes['toy-details']} maxWidth="md">
-            <Typography variant="h3" gutterBottom style={{ fontWeight: 'bold' }}>
+        <main className="main-container">
+          <section className="toy-details container">
+            <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
               {name} {!inStock && ' - Out of Stock!'}
             </Typography>
             <ToyLabelList labels={labels} />
             <img
-              className={classes['toy-img']}
+              className="toy-img"
               src="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
               alt=""
               width="100%"
@@ -60,17 +58,17 @@ class _ToyDetails extends Component {
               {description}
             </Typography>
             <Typography variant="h6">Price: {price}$</Typography>
-            <section className={classes['toy-actions']}>
+            <section className="toy-actions">
               <ToyActions toy={toy} onToyEdit={this.onToyEdit} onRemoveToy={this.onRemoveToy} />
             </section>
-          </Container>
+          </section>
 
-          <Container className={classes['toy-reviews']} maxWidth="md">
+          <section className="toy-reviews">
             <Typography variant="h5" gutterBottom style={{ fontWeight: 'bold' }}>
               Reviews
             </Typography>
             <ToyReviewList reviews={reviews} />
-          </Container>
+          </section>
         </main>
         <Popup icon={<ChatIcon />}>
           <ChatApp />

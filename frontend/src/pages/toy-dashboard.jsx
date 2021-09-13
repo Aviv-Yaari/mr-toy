@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Pie } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import { loadToys } from '../store/actions/toy.actions';
 import { toyService } from '../services/toy.service';
 import { utilService } from '../services/util.service';
-import '../css/toy-dashboard.css';
 
 class _ToyDashboard extends Component {
   state = { labelChartData: null, yearChartData: null };
@@ -32,7 +31,7 @@ class _ToyDashboard extends Component {
   render() {
     const { labelChartData, yearChartData } = this.state;
     return (
-      <Container className="toy-dashboard" maxWidth="md">
+      <main className="toy-dashboard container">
         <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
           Dashboard
         </Typography>
@@ -50,7 +49,7 @@ class _ToyDashboard extends Component {
             <Pie data={yearChartData} />
           </section>
         </div>
-      </Container>
+      </main>
     );
   }
 }

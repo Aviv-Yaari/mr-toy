@@ -10,12 +10,13 @@ import { ToyDetails } from './pages/toy-details';
 import { ToyDashboard } from './pages/toy-dashboard';
 import { ToyAddEdit } from './pages/toy-add-edit';
 import { About } from './pages/about';
+import './styles/styles.scss';
 
 export class _RootCmp extends Component {
   render() {
     const { userMsg, hideUserMsg } = this.props;
     return (
-      <>
+      <main className="main-container">
         <Router>
           <AppHeader />
           <UserMsg userMsg={userMsg} hideUserMsg={hideUserMsg} />
@@ -28,7 +29,7 @@ export class _RootCmp extends Component {
             <Route path="/" component={ToyApp} />
           </Switch>
         </Router>
-      </>
+      </main>
     );
   }
 }

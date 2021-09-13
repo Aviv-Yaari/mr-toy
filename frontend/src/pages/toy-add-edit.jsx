@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Container, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Button, MenuItem, TextField, Typography } from '@material-ui/core';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import Select from 'react-select';
@@ -8,7 +8,6 @@ import Select from 'react-select';
 import { toyService } from '../services/toy.service';
 import { getToyById, addToy, updateToy } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
-import '../css/toy-add.css';
 
 class _ToyAddEdit extends Component {
   initialState = {
@@ -102,8 +101,8 @@ class _ToyAddEdit extends Component {
     const { allLabels, isEdit, labels } = this.state;
     return (
       <>
-        <Container className="toy-add" maxWidth="md">
-          <Typography variant="h3" gutterBottom>
+        <main className="toy-add container">
+          <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
             {isEdit ? 'Edit Toy' : 'Add Toy'}
           </Typography>
           <Formik
@@ -183,7 +182,7 @@ class _ToyAddEdit extends Component {
               </form>
             )}
           </Formik>
-        </Container>
+        </main>
       </>
     );
   }

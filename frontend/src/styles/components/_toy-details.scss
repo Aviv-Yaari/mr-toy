@@ -1,0 +1,13 @@
+.toy-details {
+  & .toy-img {
+    margin: 30px 0;
+  }
+
+  & .toy-actions {
+    margin-top: 20px;
+  }
+
+  & .toy-reviews {
+    background-color: $clr-white;
+  }
+}

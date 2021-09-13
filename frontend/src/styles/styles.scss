@@ -1,0 +1,28 @@
+// Setup
+@import 'setup/variables.scss';
+@import 'setup/functions.scss';
+@import 'setup/mixins.scss';
+@import 'setup/typography.scss';
+
+// Basics
+@import 'basics/helpers.scss';
+@import 'basics/layout.scss';
+@import 'basics/base.scss';
+@import 'basics/buttons.scss';
+
+// Components
+@import 'components/about';
+@import 'components/app-header';
+@import 'components/chat-app';
+@import 'components/popup';
+@import 'components/toy-add';
+@import 'components/toy-dashboard';
+@import 'components/toy-details';
+@import 'components/toy-filter';
+@import 'components/toy-list';
+@import 'components/toy-review-list';
+@import 'components/toy-sort';
+@import 'components/toy-preview';
+
+// Pages
+@import 'pages/toy-app';

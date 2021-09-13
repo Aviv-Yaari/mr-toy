@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
-import '../css/popup.css';
 import { IconButton } from '@material-ui/core';
 
 export class Popup extends Component {
@@ -25,7 +24,7 @@ export class Popup extends Component {
                 <CloseIcon />
               </IconButton>
             </header>
-            <main className="grow">{this.props.children}</main>
+            <main className="main-content grow">{this.props.children}</main>
             <footer></footer>
           </div>
         )}

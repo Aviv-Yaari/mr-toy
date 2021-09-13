@@ -1,0 +1,32 @@
+.search {
+  border: 1px solid $clr-subtle1;
+  background-color: $clr-white;
+  box-shadow: 0 0 8px 0 #e9e9e9;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 1.5em;
+  margin-top: 20px;
+
+  input {
+    color: $clr-text-subtle;
+  }
+}
+
+.search:hover {
+  box-shadow: 0 0 10px 0 #adadad;
+}
+
+.toy-filter {
+  margin: 20px 0;
+
+  & .filters {
+    margin: 20px 0;
+    gap: 10px;
+    & .labels,
+    & .in-stock {
+      flex-basis: 300px;
+      background-color: $clr-white;
+      color: $clr-text-subtle;
+    }
+  }
+}

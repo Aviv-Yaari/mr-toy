@@ -12,7 +12,6 @@ import {
   sortField,
 } from '../store/actions/toy.actions';
 import { showUserMsg } from '../store/actions/general.actions';
-import { ToySort } from '../cmps/toy-sort';
 
 class _ToyApp extends Component {
   async componentDidMount() {
@@ -39,11 +38,6 @@ class _ToyApp extends Component {
     this.props.loadToys(this.props.filter);
   };
 
-  onClearFilters = () => {
-    this.props.clearFilter();
-    this.props.loadToys();
-  };
-
   onSortField = async field => {
     await this.props.sortField(field);
     this.props.loadToys(undefined, this.props.sort);
@@ -56,9 +50,9 @@ class _ToyApp extends Component {
         <ToyFilter
           filter={filter}
           onSetFilter={this.onSetFilter}
-          onClearFilters={this.onClearFilters}
+          onSortField={this.onSortField}
+          sort={sort}
         />
-        <ToySort onSortField={this.onSortField} sort={sort} />
         <ToyList
           toys={toys}
           onRemoveToy={this.onRemoveToy}

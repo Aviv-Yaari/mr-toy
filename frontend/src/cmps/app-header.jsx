@@ -2,12 +2,10 @@ import Button from '@material-ui/core/Button';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import '../css/app-header.css';
-
 export class AppHeader extends Component {
   render() {
     return (
-      <header className="app-header flex align-center">
+      <header className="app-header full flex align-center">
         <NavLink className="logo" to="/">
           <Button size="large">Mr.Toy</Button>
         </NavLink>

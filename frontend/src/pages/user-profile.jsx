@@ -4,7 +4,6 @@ import { Button, TextField } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
 import { UserActivities } from '../cmps/user-activities';
 import { updateUser } from '../store/actions/user.actions';
-import '../css/user-profile.css';
 import { showUserMsg } from '../store/actions/general.actions';
 import { userService } from '../services/user.service';
 

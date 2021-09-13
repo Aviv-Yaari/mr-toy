@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import { Button, Container, Typography } from '@material-ui/core';
-import '../css/about.css';
+import { Button, Typography } from '@material-ui/core';
 
 const BranchMarker = ({ name }) => (
   <div className="branch-marker">
@@ -35,7 +34,7 @@ export class About extends Component {
   render() {
     const { name, lat, lng } = this.state.currBranch;
     return (
-      <Container maxWidth="md">
+      <main className="container">
         <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
           About Us
         </Typography>
@@ -65,7 +64,7 @@ export class About extends Component {
             ))}
           </GoogleMapReact>
         </div>
-      </Container>
+      </main>
     );
   }
 }

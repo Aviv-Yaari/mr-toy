@@ -1,7 +1,6 @@
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import React, { Component } from 'react';
-import '../css/chat-app.css';
 
 export class ChatApp extends Component {
   state = { messages: [{ text: 'Hey there!', from: 'Bot' }] };

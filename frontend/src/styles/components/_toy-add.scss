@@ -1,16 +1,17 @@
-.toy-add form {
+.toy-add {
+  & form {
     margin-top: 40px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 30px;
-}
+  }
 
-.toy-add .labels {
+  & .labels {
     width: 100%;
     font-family: 'Roboto';
-}
-
-.toy-add .labels>*:first-child {
-    width: 100%;
+    & > *:first-child {
+      width: 100%;
+    }
+  }
 }

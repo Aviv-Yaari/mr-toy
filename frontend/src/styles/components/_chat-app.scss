@@ -1,0 +1,23 @@
+.chat-app {
+  height: 100%;
+
+  & .message {
+    padding: 6px 0;
+
+    &:nth-child(even) {
+      background-color: rgb(245, 245, 245);
+    }
+
+    & .from {
+      color: purple;
+    }
+
+    &:nth-child(even) .from {
+      color: royalblue;
+    }
+  }
+
+  & .send {
+    gap: 10px;
+  }
+}
