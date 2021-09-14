@@ -1,14 +1,17 @@
 import Button from '@material-ui/core/Button';
-import React, { Component } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { AppHeaderUser } from './app-header-user';
 
-export class AppHeader extends Component {
-  render() {
-    return (
-      <header className="app-header full flex align-center">
-        <NavLink className="logo" to="/">
-          <Button size="large">Mr.Toy</Button>
-        </NavLink>
+export const AppHeader = props => {
+  const { onLogout } = props;
+  const user = useSelector(state => state.userModule.user);
+  return (
+    <header className="app-header full flex align-center">
+      <NavLink className="logo" to="/toy">
+        <Button size="large">Mr.Toy</Button>
+      </NavLink>
+      <div>
         <NavLink to="/toy/add">
           <Button>Add Toy</Button>
         </NavLink>
@@ -18,7 +21,8 @@ export class AppHeader extends Component {
         <NavLink to="/toy/about">
           <Button>About</Button>
         </NavLink>
-      </header>
-    );
-  }
-}
+      </div>
+      <AppHeaderUser user={user} onLogout={onLogout} />
+    </header>
+  );
+};

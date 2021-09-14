@@ -1,14 +1,26 @@
-import { userService } from '../../services/user.service';
+import { authService } from '../../services/auth.service';
 
-export const loadUser = () => {
+export const login = (email, password) => {
   return async dispatch => {
-    const user = await userService.getUser();
-    dispatch({ type: 'UPDATE_USER', user });
+    const user = await authService.login(email, password);
+    dispatch({ type: 'SET_USER', user });
   };
 };
 
-export const updateUser = (user, fullName, prefs) => {
+export const logout = () => {
+  return async dispatch => {
+    await authService.logout();
+    dispatch({ type: 'SET_USER', user: null });
+  };
+};
+
+export const setUser = user => {
+  return dispatch => dispatch({ type: 'SET_USER', user });
+};
+
+export const loadUserFromStorage = () => {
   return dispatch => {
-    dispatch({ type: 'UPDATE_USER', user: { ...user, fullName, prefs } });
+    const user = authService.loadFromStorage();
+    if (user) dispatch({ type: 'SET_USER', user });
   };
 };

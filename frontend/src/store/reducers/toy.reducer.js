@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 export const initialState = {
   toys: null,
+  currToy: null,
   filter: { name: '', inStock: 'all', labels: [] },
   sort: { field: 'createdAt', type: 1 },
 };
@@ -10,6 +11,8 @@ export function toyReducer(state = initialState, action) {
   const stateCopy = _.cloneDeep(state);
   let idx;
   switch (action.type) {
+    case 'SET_TOY':
+      return { ...state, currToy: action.toy };
     case 'SET_TOYS':
       stateCopy.toys = action.toys;
       break;

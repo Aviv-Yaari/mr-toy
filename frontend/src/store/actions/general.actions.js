@@ -1,6 +1,6 @@
-export const showUserMsg = msg => {
+export const showUserMsg = (msg, isError) => {
   return dispatch => {
-    dispatch({ type: 'SHOW_USER_MSG', msg });
+    dispatch({ type: 'SHOW_USER_MSG', msg, isError });
   };
 };
 

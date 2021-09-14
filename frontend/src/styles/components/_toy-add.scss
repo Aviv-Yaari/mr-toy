@@ -1,11 +1,8 @@
 .toy-add {
-  & form {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 30px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
 
   & .labels {
     width: 100%;

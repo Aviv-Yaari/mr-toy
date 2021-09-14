@@ -11,7 +11,7 @@ export class ToyFilter extends Component {
   state = { isExpanded: false };
 
   async componentDidMount() {
-    this.allLabels = (await toyService.getLabels()).map(label => ({ label, value: label }));
+    this.allLabels = toyService.getAllLabels().map(label => ({ label, value: label }));
   }
 
   handleChange = ev => {

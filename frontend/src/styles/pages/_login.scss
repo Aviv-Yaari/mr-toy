@@ -1,0 +1,11 @@
+.login {
+  & form {
+    max-width: $mobile-breakpoint;
+    margin: 0 auto;
+    gap: 20px;
+  }
+
+  & .heading {
+    margin: 40px 0;
+  }
+}

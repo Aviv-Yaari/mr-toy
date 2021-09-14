@@ -4,7 +4,7 @@
   box-shadow: 0 0 11px 0 #f5f5f5;
 
   & .logo {
-    border-right: 1px solid rgb(216, 216, 216);
+    border-right: 1px solid $clr-subtle1;
     padding-right: 10px;
   }
 
@@ -15,5 +15,10 @@
 
   & button {
     padding: 15px;
+  }
+
+  & .user {
+    border-left: 1px solid $clr-subtle1;
+    margin-left: auto;
   }
 }

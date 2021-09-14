@@ -32,7 +32,7 @@ export class About extends Component {
   };
 
   render() {
-    const { name, lat, lng } = this.state.currBranch;
+    const { lat, lng } = this.state.currBranch;
     return (
       <main className="container">
         <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>

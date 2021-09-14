@@ -67,7 +67,7 @@ class _ToyDetails extends Component {
             <Typography variant="h5" gutterBottom style={{ fontWeight: 'bold' }}>
               Reviews
             </Typography>
-            <ToyReviewList reviews={reviews} />
+            {reviews && <ToyReviewList reviews={reviews} />}
           </section>
         </main>
         <Popup icon={<ChatIcon />}>

@@ -1,4 +1,7 @@
-import axios from 'axios';
+import Axios from 'axios';
+const axios = Axios.create({
+  withCredentials: true,
+});
 
 export const toyService = {
   getToys,
@@ -6,7 +9,7 @@ export const toyService = {
   create,
   remove,
   update,
-  getLabels,
+  getAllLabels,
   getToysLabelMap,
   getToysYearMap,
 };
@@ -23,9 +26,9 @@ let gLabels = [
 ];
 
 const BASE_URL =
-  process.env.NODE_ENV == 'production' ? '/api/toy' : 'http://localhost:3030/api/toy';
+  process.env.NODE_ENV === 'production' ? '/api/toy' : 'http://localhost:3030/api/toy';
 
-async function getLabels() {
+function getAllLabels() {
   return gLabels;
 }
 
@@ -52,7 +55,7 @@ async function remove(id) {
 }
 
 async function update(toy) {
-  const res = await axios.post(BASE_URL, toy);
+  const res = await axios.put(`${BASE_URL}/${toy._id}`, toy);
   return res.data;
 }
 

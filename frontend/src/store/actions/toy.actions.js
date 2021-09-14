@@ -11,7 +11,7 @@ export const loadToys = (filter = initialState.filter, sort) => {
 export const getToyById = id => {
   return async dispatch => {
     const toy = await toyService.getToyById(id);
-    dispatch({ type: 'SET_TOYS', toys: [toy] });
+    dispatch({ type: 'SET_TOY', toy });
   };
 };
 
