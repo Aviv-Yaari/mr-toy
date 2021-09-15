@@ -3,7 +3,7 @@ import _ from 'lodash';
 export const initialState = {
   toys: null,
   currToy: null,
-  filter: { name: '', inStock: 'all', labels: [] },
+  filter: {},
   sort: { field: 'createdAt', type: 1 },
 };
 
@@ -25,11 +25,15 @@ export function toyReducer(state = initialState, action) {
       if (idx !== -1) stateCopy.toys[idx] = action.toy;
       break;
     case 'SET_FILTER':
-      return { ...state, filter: { ...state.filter, ...action.filter } };
+      const filter = { ...state.filter, ...action.filter };
+      if (filter.name === '') delete filter.name;
+      if (filter.inStock === 'all') delete filter.inStock;
+      if (_.isEmpty(filter.labels)) delete filter.labels;
+
+      return { ...state, filter };
     case 'SORT_FIELD':
-      const currSortType = state.sort.type;
-      const newSortType = currSortType === 1 ? -1 : 1;
-      return { ...state, sort: { field: action.field, type: newSortType } };
+      const newSortType = Object.values(state.sort)[0] === 1 ? -1 : 1;
+      return { ...state, sort: { [action.field]: newSortType } };
     default:
       break;
   }

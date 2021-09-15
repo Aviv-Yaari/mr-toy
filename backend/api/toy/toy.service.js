@@ -10,12 +10,12 @@ module.exports = {
   update,
 };
 
-async function query(filterBy) {
+async function query(filterBy, sortBy) {
   try {
-    // const criteria = _buildCriteria(filterBy)
-    const criteria = {};
+    const criteria = _buildCriteria(filterBy);
+    const sort = sortBy ? JSON.parse(sortBy) : sortBy;
     const collection = await dbService.getCollection('toy');
-    const toys = await collection.find(criteria).toArray();
+    const toys = await collection.find(criteria).sort(sort).toArray();
     return toys;
   } catch (err) {
     logger.error('cannot find toys', err);
@@ -66,4 +66,13 @@ async function update(toy) {
     logger.error(`cannot update toy ${toyId}`, err);
     throw err;
   }
+}
+
+function _buildCriteria(filterBy) {
+  const criteria = JSON.parse(filterBy);
+  if (criteria.labels) criteria.labels = { $all: criteria.labels };
+  if (criteria.name) {
+    criteria.name = { $regex: criteria.name, $options: 'i' };
+  }
+  return criteria;
 }

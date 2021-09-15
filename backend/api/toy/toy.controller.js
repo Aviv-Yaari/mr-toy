@@ -12,8 +12,8 @@ module.exports = {
 // GET LIST
 async function getToys(req, res) {
   try {
-    const queryParams = req.query;
-    const toys = await toyService.query(queryParams);
+    const { criteria, sort } = req.query;
+    const toys = await toyService.query(criteria, sort);
     res.json(toys);
   } catch (err) {
     logger.error('Failed to get toys', err);

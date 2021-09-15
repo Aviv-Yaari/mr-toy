@@ -29,7 +29,7 @@ export class ToyFilter extends Component {
   };
 
   render() {
-    const { name, inStock } = this.props.filter;
+    const { name = '', inStock = 'all' } = this.props.filter;
     const { onSortField, sort } = this.props;
     const { isExpanded } = this.state;
     return (

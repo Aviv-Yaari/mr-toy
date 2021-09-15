@@ -16,7 +16,7 @@ export const ToySort = props => {
 
   const onSortField = field => {
     props.onSortField(field);
-    setTimeout(onClose, 200);
+    setTimeout(onClose, 500);
   };
 
   const onClose = () => {
@@ -35,18 +35,18 @@ export const ToySort = props => {
         open={Boolean(anchorEl)}
         onClose={onClose}>
         <MenuItem onClick={() => onSortField('name')}>
-          {sort.field === 'name' && sort.type === 1 && <ArrowDownwardIcon />}
-          {sort.field === 'name' && sort.type === -1 && <ArrowUpwardIcon />}
+          {sort.name === 1 && <ArrowDownwardIcon />}
+          {sort.name === -1 && <ArrowUpwardIcon />}
           Name
         </MenuItem>
         <MenuItem onClick={() => onSortField('price')}>
-          {sort.field === 'price' && sort.type === 1 && <ArrowDownwardIcon />}
-          {sort.field === 'price' && sort.type === -1 && <ArrowUpwardIcon />}
+          {sort.price === 1 && <ArrowDownwardIcon />}
+          {sort.price === -1 && <ArrowUpwardIcon />}
           Price
         </MenuItem>
         <MenuItem onClick={() => onSortField('createdAt')}>
-          {sort.field === 'createdAt' && sort.type === 1 && <ArrowDownwardIcon />}
-          {sort.field === 'createdAt' && sort.type === -1 && <ArrowUpwardIcon />}
+          {sort.createdAt === 1 && <ArrowDownwardIcon />}
+          {sort.createdAt === -1 && <ArrowUpwardIcon />}
           Created At
         </MenuItem>
       </Menu>
