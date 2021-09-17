@@ -1,6 +1,13 @@
 .toy-details {
-  & .toy-img {
+  & .toy-img-container {
+    text-align: center;
     margin: 30px 0;
+  }
+
+  & .toy-img {
+    width: 85%;
+    max-height: 400px;
+    object-fit: contain;
   }
 
   & .toy-actions {

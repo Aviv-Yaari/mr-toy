@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import ChatIcon from '@material-ui/icons/Chat';
 
 import { getToyById, removeToy } from '../store/actions/toy.actions';
+import { addReview, loadReviews } from '../store/actions/review.actions';
 import { showUserMsg } from '../store/actions/general.actions';
 import { ToyActions } from '../cmps/toy-actions';
 import { ToyLabelList } from '../cmps/toy-label-list';
 import { ToyReviewList } from '../cmps/toy-review-list';
 import { Popup } from '../cmps/popup';
 import { ChatApp } from '../cmps/chat-app';
+import { ToyReviewAdd } from '../cmps/toy-review-add';
 
 class _ToyDetails extends Component {
   state = { isEditMode: false };
@@ -35,9 +37,20 @@ class _ToyDetails extends Component {
     this.props.history.push(`/toy/${_id}/edit`);
   };
 
+  onReviewAdd = async review => {
+    try {
+      const newReview = { ...review, toy: this.props.toy._id };
+      await this.props.addReview(newReview);
+      await this.loadToy();
+      this.props.showUserMsg('Review added');
+    } catch (err) {
+      this.props.showUserMsg('Could not add review', true);
+    }
+  };
+
   render() {
-    if (!this.props.toys || !this.props.toys.length) return <CircularProgress />;
-    const toy = this.props.toys[0];
+    const { toy } = this.props;
+    if (!toy) return <CircularProgress />;
     const { name, description, price, labels, inStock, reviews } = toy;
 
     return (
@@ -48,12 +61,13 @@ class _ToyDetails extends Component {
               {name} {!inStock && ' - Out of Stock!'}
             </Typography>
             <ToyLabelList labels={labels} />
-            <img
-              className="toy-img"
-              src="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-              alt=""
-              width="100%"
-            />
+            <div className="toy-img-container">
+              <img
+                className="toy-img"
+                src="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
+                alt=""
+              />
+            </div>
             <Typography variant="body1" gutterBottom>
               {description}
             </Typography>
@@ -64,9 +78,7 @@ class _ToyDetails extends Component {
           </section>
 
           <section className="toy-reviews">
-            <Typography variant="h5" gutterBottom style={{ fontWeight: 'bold' }}>
-              Reviews
-            </Typography>
+            <ToyReviewAdd onSubmit={this.onReviewAdd} />
             {reviews && <ToyReviewList reviews={reviews} />}
           </section>
         </main>
@@ -79,13 +91,16 @@ class _ToyDetails extends Component {
 }
 
 const mapStateToProps = state => {
-  const { toys } = state.toyModule;
-  return { toys };
+  const { currToy: toy } = state.toyModule;
+  const { reviews } = state.reviewModule;
+  return { toy, reviews };
 };
 
 const mapDispatchToProps = {
   getToyById,
   removeToy,
+  addReview,
+  loadReviews,
   showUserMsg,
 };
 
