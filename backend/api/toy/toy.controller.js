@@ -1,5 +1,6 @@
 const toyService = require('./toy.service.js');
 const logger = require('../../services/logger.service');
+const ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
   getToys,
@@ -37,6 +38,7 @@ async function getToyById(req, res) {
 async function addToy(req, res) {
   try {
     const toy = req.body;
+    toy.createdBy = ObjectId(req.session.user._id);
     const addedToy = await toyService.add(toy);
     res.json(addedToy);
   } catch (err) {

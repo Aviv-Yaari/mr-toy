@@ -26,8 +26,34 @@ async function query(filterBy, sortBy) {
 async function getById(toyId) {
   try {
     const collection = await dbService.getCollection('toy');
-    const toy = collection.findOne({ _id: ObjectId(toyId) });
-    return toy;
+    const toys = await collection
+      .aggregate([
+        { $match: { _id: ObjectId(toyId) } },
+        {
+          $lookup: {
+            from: 'review',
+            as: 'reviews',
+            let: { toyId: '$_id' },
+            pipeline: [
+              { $match: { $expr: { $eq: ['$toy', '$$toyId'] } } },
+              {
+                $lookup: {
+                  from: 'user',
+                  as: 'user',
+                  let: { userId: '$createdBy' },
+                  pipeline: [{ $match: { $expr: { $eq: ['$_id', '$$userId'] } } }],
+                },
+              },
+              { $unwind: '$user' },
+              { $project: { 'user.password': 0 } },
+            ],
+          },
+        },
+        { $project: { 'reviews.createdBy': 0, 'reviews.toy': 0 } },
+      ])
+      .toArray();
+    // const toy = collection.findOne({ _id: ObjectId(toyId) });
+    return toys[0];
   } catch (err) {
     logger.error(`cannot find toy ${toyId}`, err);
     throw err;
