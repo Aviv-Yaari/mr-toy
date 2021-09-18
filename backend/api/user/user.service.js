@@ -34,9 +34,34 @@ async function query(filterBy = {}) {
 async function getById(userId) {
   try {
     const collection = await dbService.getCollection('user');
-    const user = await collection.findOne({ _id: ObjectId(userId) });
-    delete user.password;
-    return user;
+    // const user = await collection.findOne({ _id: ObjectId(userId) });
+    // delete user.password;
+    const users = await collection
+      .aggregate([
+        { $match: { _id: ObjectId(userId) } },
+        {
+          $lookup: {
+            from: 'review',
+            as: 'reviews',
+            let: { userId: '$_id' },
+            pipeline: [
+              { $match: { $expr: { $eq: ['$createdBy', '$$userId'] } } },
+              {
+                $lookup: {
+                  from: 'toy',
+                  as: 'toy',
+                  let: { toyId: '$toy' },
+                  pipeline: [{ $match: { $expr: { $eq: ['$_id', '$$toyId'] } } }],
+                },
+              },
+              { $unwind: '$toy' },
+            ],
+          },
+        },
+        { $project: { 'reviews.createdBy': 0, password: 0 } },
+      ])
+      .toArray();
+    return users[0];
   } catch (err) {
     logger.error(`while finding user ${userId}`, err);
     throw err;

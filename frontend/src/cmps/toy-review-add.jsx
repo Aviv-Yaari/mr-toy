@@ -6,7 +6,12 @@ import * as yup from 'yup';
 // Settings:
 
 const validationSchema = yup.object({
-  rating: yup.number('enter rating'),
+  rating: yup.number('Enter rating'),
+  title: yup.string('Enter title').required('Enter review title'),
+  details: yup
+    .string('Enter details')
+    .required('Enter review details')
+    .min(5, 'Your review is too short'),
 });
 
 // Actual Component:
@@ -29,6 +34,7 @@ export const ToyReviewAdd = props => {
         Add Review
       </Typography>
       <Rating
+        size="large"
         name="rating"
         precision={0.5}
         {...formik.getFieldProps('rating')}
@@ -41,6 +47,8 @@ export const ToyReviewAdd = props => {
         margin="normal"
         fullWidth
         {...formik.getFieldProps('title')}
+        error={formik.touched.title && Boolean(formik.errors.title)}
+        helperText={formik.touched.title && formik.errors.title}
       />
       <TextField
         label="Details"
@@ -51,6 +59,8 @@ export const ToyReviewAdd = props => {
         rows={5}
         fullWidth
         {...formik.getFieldProps('details')}
+        error={formik.touched.details && Boolean(formik.errors.details)}
+        helperText={formik.touched.details && formik.errors.details}
       />
       <Button type="submit">Add Review</Button>
     </form>

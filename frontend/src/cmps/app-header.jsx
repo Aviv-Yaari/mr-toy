@@ -18,6 +18,9 @@ export const AppHeader = props => {
         <NavLink to="/toy/dashboard">
           <Button>Dashboard</Button>
         </NavLink>
+        <NavLink to="/review">
+          <Button>Reviews</Button>
+        </NavLink>
         <NavLink to="/toy/about">
           <Button>About</Button>
         </NavLink>

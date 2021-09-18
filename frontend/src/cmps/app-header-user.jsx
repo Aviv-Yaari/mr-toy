@@ -16,7 +16,7 @@ export const AppHeaderUser = props => {
         </>
       ) : (
         <>
-          <NavLink to="/user">
+          <NavLink to={`/user/${user._id}`}>
             <Button>
               {user.firstName}
               {user.isAdmin ? ' (Admin)' : ''}

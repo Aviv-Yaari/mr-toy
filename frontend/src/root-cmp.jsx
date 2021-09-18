@@ -16,6 +16,8 @@ import { SignUp } from './pages/sign-up';
 import { LogIn } from './pages/login';
 import { ToyAdd } from './pages/toy-add';
 import { ToyEdit } from './pages/toy-edit';
+import { UserDetails } from './pages/user-details';
+import { ReviewExplore } from './pages/review-explore';
 
 export class _RootCmp extends Component {
   componentDidMount() {
@@ -45,6 +47,8 @@ export class _RootCmp extends Component {
             <Route path="/toy" component={ToyApp} />
             <Route path="/signup" component={SignUp} />
             <Route path="/login" component={LogIn} />
+            <Route path="/user/:id" component={UserDetails} />
+            <Route path="/review" component={ReviewExplore} />
           </Switch>
         </Router>
       </main>

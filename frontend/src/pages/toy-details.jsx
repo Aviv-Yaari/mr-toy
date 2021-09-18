@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ChatIcon from '@material-ui/icons/Chat';
 
 import { getToyById, removeToy } from '../store/actions/toy.actions';
-import { addReview, loadReviews } from '../store/actions/review.actions';
+import { addReview } from '../store/actions/review.actions';
 import { showUserMsg } from '../store/actions/general.actions';
 import { ToyActions } from '../cmps/toy-actions';
 import { ToyLabelList } from '../cmps/toy-label-list';
@@ -100,7 +100,6 @@ const mapDispatchToProps = {
   getToyById,
   removeToy,
   addReview,
-  loadReviews,
   showUserMsg,
 };
 
