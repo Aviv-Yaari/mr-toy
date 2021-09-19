@@ -3,11 +3,25 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { ReviewExploreList } from '../cmps/review-explore-list';
+import { reviewService } from '../services/review.service';
+import { showUserMsg } from '../store/actions/general.actions';
 import { loadReviews } from '../store/actions/review.actions';
 
 export const ReviewExplore = props => {
   const reviews = useSelector(state => state.reviewModule.reviews);
   const dispatch = useDispatch();
+
+  const onRemoveReview = async review => {
+    try {
+      dispatch(showUserMsg('Deleting review...'));
+      await reviewService.remove(review._id);
+      dispatch(showUserMsg('Review deleted'));
+      dispatch(loadReviews());
+    } catch (err) {
+      console.error(err);
+      dispatch(showUserMsg('Could not delete review: ' + err.response.data.err || '', true));
+    }
+  };
 
   useEffect(() => {
     dispatch(loadReviews());
@@ -20,7 +34,7 @@ export const ReviewExplore = props => {
         Explore Reviews
       </Typography>
 
-      <ReviewExploreList reviews={reviews} />
+      <ReviewExploreList reviews={reviews} onRemoveReview={onRemoveReview} />
     </main>
   );
 };

@@ -2,7 +2,7 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import { ReviewCmp } from './review-cmp';
 
 export const UserReviewList = props => {
-  const { reviews } = props;
+  const { reviews, onRemoveReview } = props;
   if (!reviews) return <CircularProgress />;
   if (!reviews.length) return <div>No reviews written by this user</div>;
   return (
@@ -12,7 +12,7 @@ export const UserReviewList = props => {
       </Typography>
       <section className="user-review-list flex column">
         {reviews.map(review => (
-          <ReviewCmp key={review._id} review={review} showToyLink />
+          <ReviewCmp key={review._id} review={review} showToyLink onRemoveReview={onRemoveReview} />
         ))}
       </section>
     </>

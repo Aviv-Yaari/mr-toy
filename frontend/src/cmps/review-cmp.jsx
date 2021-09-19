@@ -1,10 +1,20 @@
-import { Avatar, Card, CardContent, CardHeader, Typography } from '@material-ui/core';
+import {
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import DeleteIcon from '@material-ui/icons/Delete';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 export const ReviewCmp = props => {
   const { user, rating, details, title, createdAt, toy } = props.review;
+  const { onRemoveReview, review } = props;
   return (
     <Card className="review-cmp">
       <CardHeader
@@ -36,6 +46,11 @@ export const ReviewCmp = props => {
           {details}
         </Typography>
       </CardContent>
+      <CardActions>
+        <IconButton onClick={() => onRemoveReview(review)} aria-label="delete">
+          <DeleteIcon />
+        </IconButton>
+      </CardActions>
     </Card>
   );
 };

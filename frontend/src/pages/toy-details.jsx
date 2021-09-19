@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ChatIcon from '@material-ui/icons/Chat';
 
 import { getToyById, removeToy } from '../store/actions/toy.actions';
-import { addReview } from '../store/actions/review.actions';
+import { addReview, removeReview } from '../store/actions/review.actions';
 import { showUserMsg } from '../store/actions/general.actions';
 import { ToyActions } from '../cmps/toy-actions';
 import { ToyLabelList } from '../cmps/toy-label-list';
@@ -13,6 +13,7 @@ import { ToyReviewList } from '../cmps/toy-review-list';
 import { Popup } from '../cmps/popup';
 import { ChatApp } from '../cmps/chat-app';
 import { ToyReviewAdd } from '../cmps/toy-review-add';
+import { reviewService } from '../services/review.service';
 
 class _ToyDetails extends Component {
   state = { isEditMode: false };
@@ -40,12 +41,23 @@ class _ToyDetails extends Component {
 
   onReviewAdd = async review => {
     try {
-      const newReview = { ...review, toy: this.props.toy._id };
-      await this.props.addReview(newReview);
+      await reviewService.create({ ...review, toy: this.props.toy._id });
       await this.loadToy();
       this.props.showUserMsg('Review added');
     } catch (err) {
       this.props.showUserMsg('Could not add review', true);
+    }
+  };
+
+  onRemoveReview = async review => {
+    try {
+      this.props.showUserMsg('Deleting review...');
+      await reviewService.remove(review._id);
+      await this.loadToy();
+      this.props.showUserMsg('Review deleted');
+    } catch (err) {
+      console.error(err);
+      this.props.showUserMsg('Could not delete review: ' + err.response.data.err || '', true);
     }
   };
 
@@ -76,7 +88,7 @@ class _ToyDetails extends Component {
 
           <section className="toy-reviews">
             <ToyReviewAdd onSubmit={this.onReviewAdd} />
-            {reviews && <ToyReviewList reviews={reviews} />}
+            {reviews && <ToyReviewList reviews={reviews} onRemoveReview={this.onRemoveReview} />}
           </section>
         </main>
         <Popup icon={<ChatIcon />}>
@@ -97,6 +109,7 @@ const mapDispatchToProps = {
   getToyById,
   removeToy,
   addReview,
+  removeReview,
   showUserMsg,
 };
 

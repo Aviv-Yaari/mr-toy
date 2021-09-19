@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export const AppHeaderUser = props => {
   const { user, onLogout } = props;
   return (
-    <div className="user flex align-center wrap justify-center">
+    <div className="user">
       {!user ? (
         <>
           <NavLink to="/signup">
