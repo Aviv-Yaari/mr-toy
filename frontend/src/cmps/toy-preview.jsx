@@ -10,18 +10,19 @@ import { ToyLabelList } from './toy-label-list';
 import { ToyActions } from './toy-actions';
 
 export const ToyPreview = props => {
+  const DEFAULT_IMG = 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg';
   const { toy, onToyClick, onRemoveToy, onToyEdit } = props;
-  const { name, price, labels, inStock, createdAt, description } = toy;
+  const { name, price, labels, inStock, createdAt, description, img } = toy;
   return (
     <Card className="toy-preview">
       <CardActionArea onClick={() => onToyClick(toy)}>
-        <CardMedia
-          className="media"
-          image="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
+        <CardMedia className="media" image={img || DEFAULT_IMG} title="toy" />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h2"
+            style={{ textDecoration: !inStock ? 'line-through' : 'unset' }}>
             {name}
             {!inStock && ' - Out of Stock!'}
           </Typography>

@@ -1,8 +1,11 @@
-import { Button, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Button, IconButton, MenuItem, TextField, Typography } from '@material-ui/core';
+import PublishIcon from '@material-ui/icons/Publish';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Select from 'react-select';
 import { toyService } from '../services/toy.service';
+import axios from 'axios';
+import { useState } from 'react';
 
 // Settings:
 
@@ -20,30 +23,41 @@ const validationSchema = yup.object({
 
 const allLabels = toyService.getAllLabels().map(label => ({ label, value: label }));
 
-const FormField = props => {
-  const { name, formik } = props;
-  return (
-    <TextField
-      {...props}
-      fullWidth
-      variant="outlined"
-      value={formik.values[name]}
-      error={formik.touched[name] && Boolean(formik.errors[name])}
-      helperText={formik.touched[name] && formik.errors[name]}
-      onChange={formik.handleChange}
-    />
-  );
-};
-
 // Actual Component:
 
 export const ToyAddEditForm = props => {
-  const { isEdit, initialValues, onSubmit } = props;
+  const { isEdit, initialValues } = props;
+  const [img, setImg] = useState(initialValues.img);
+
+  const onUploadImg = async ev => {
+    const CLOUD_NAME = 'avivyaari';
+    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+    const UPLOAD_PRESET = 'k9e87w7t';
+    const formData = new FormData();
+    formData.append('file', ev.target.files[0]);
+    formData.append('upload_preset', UPLOAD_PRESET);
+    try {
+      const res = await axios.post(UPLOAD_URL, formData);
+      setImg(res.data.url);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const formik = useFormik({
     initialValues,
-    onSubmit,
+    onSubmit: data => props.onSubmit({ ...data, img }),
     validationSchema,
   });
+
+  const getFormikProps = field => {
+    return {
+      value: formik.values[field],
+      error: formik.touched[field] && Boolean(formik.errors[field]),
+      helperText: formik.touched[field] && formik.errors[field],
+      onChange: formik.handleChange,
+    };
+  };
 
   const handleLabelChange = ev => {
     const labels = ev.map(label => label.value);
@@ -51,27 +65,62 @@ export const ToyAddEditForm = props => {
   };
 
   return (
-    <form className="toy-add container" onSubmit={formik.handleSubmit}>
-      <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
-        {isEdit ? 'Edit Toy' : 'Add Toy'}
-      </Typography>
-      <FormField label="Toy Name" name="name" formik={formik} />
-      <FormField label="Toy Description" name="description" multiline formik={formik} />
-      <FormField label="Price" name="price" type="number" formik={formik} />
-      <FormField label="Availability" name="inStock" select formik={formik}>
-        <MenuItem value={true}>In stock</MenuItem>
-        <MenuItem value={false}>Out of stock</MenuItem>
-      </FormField>
-      <div className="labels">
-        <Select
-          placeholder="Labels"
-          options={allLabels}
-          isMulti
-          onChange={handleLabelChange}
-          defaultValue={initialValues.labels.map(label => ({ label, value: label }))}
-        />
+    <div className="toy-add-edit">
+      <div className="toy-img flex align-center justify-center">
+        {img && <img alt="toy" src={img} />}
+        <IconButton className="btn-upload">
+          <PublishIcon />
+          <input onChange={onUploadImg} type="file" />
+        </IconButton>
       </div>
-      <Button type="submit">{isEdit ? 'Save Changes' : 'Submit New Toy'}</Button>
-    </form>
+      <form className="toy-add container" onSubmit={formik.handleSubmit}>
+        <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
+          {isEdit ? 'Edit Toy' : 'Add Toy'}
+        </Typography>
+        <TextField
+          fullWidth
+          variant="outlined"
+          label="Toy Name"
+          name="name"
+          {...getFormikProps('name')}
+        />
+        <TextField
+          fullWidth
+          variant="outlined"
+          label="Toy Description"
+          name="description"
+          multiline
+          {...getFormikProps('description')}
+        />
+        <TextField
+          fullWidth
+          variant="outlined"
+          label="Price"
+          name="price"
+          type="number"
+          {...getFormikProps('price')}
+        />
+        <TextField
+          fullWidth
+          variant="outlined"
+          label="Availability"
+          name="inStock"
+          select
+          {...getFormikProps('inStock')}>
+          <MenuItem value={true}>In stock</MenuItem>
+          <MenuItem value={false}>Out of stock</MenuItem>
+        </TextField>
+        <div className="labels">
+          <Select
+            placeholder="Labels"
+            options={allLabels}
+            isMulti
+            onChange={handleLabelChange}
+            defaultValue={initialValues.labels.map(label => ({ label, value: label }))}
+          />
+        </div>
+        <Button type="submit">{isEdit ? 'Save Changes' : 'Submit New Toy'}</Button>
+      </form>
+    </div>
   );
 };

@@ -18,9 +18,13 @@ class _ToyApp extends Component {
     this.props.loadToys();
   }
 
-  onRemoveToy = toy => {
-    this.props.removeToy(toy);
-    this.props.showUserMsg('Toy removed');
+  onRemoveToy = async toy => {
+    try {
+      await this.props.removeToy(toy);
+      this.props.showUserMsg('Toy removed');
+    } catch (err) {
+      this.props.showUserMsg('Could not remove toy', true);
+    }
   };
 
   onToyClick = toy => {

@@ -11,7 +11,6 @@ export const loadReviews = (filter = initialState.filter, sort) => {
 export const addReview = review => {
   return async dispatch => {
     await reviewService.create(review);
-    dispatch({ type: 'ADD_REVIEW', review });
   };
 };
 

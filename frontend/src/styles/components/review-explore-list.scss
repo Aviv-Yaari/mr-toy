@@ -1,0 +1,9 @@
+.review-explore-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+
+  .review-cmp {
+    flex-basis: 48%;
+  }
+}

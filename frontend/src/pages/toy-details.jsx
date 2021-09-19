@@ -16,6 +16,7 @@ import { ToyReviewAdd } from '../cmps/toy-review-add';
 
 class _ToyDetails extends Component {
   state = { isEditMode: false };
+  DEFAULT_IMG = 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg';
 
   componentDidMount() {
     this.loadToy();
@@ -51,22 +52,18 @@ class _ToyDetails extends Component {
   render() {
     const { toy } = this.props;
     if (!toy) return <CircularProgress />;
-    const { name, description, price, labels, inStock, reviews } = toy;
+    const { name, description, price, labels, inStock, reviews, img } = toy;
 
     return (
       <>
         <main>
-          <section className="toy-details container">
+          <section className="toy-details container flex column align-center justify-center">
             <Typography variant="h3" gutterBottom style={{ fontWeight: '500' }}>
               {name} {!inStock && ' - Out of Stock!'}
             </Typography>
             <ToyLabelList labels={labels} />
             <div className="toy-img-container">
-              <img
-                className="toy-img"
-                src="https://material-ui.com/static/images/cards/contemplative-reptile.jpg"
-                alt=""
-              />
+              <img className="toy-img" src={img || this.DEFAULT_IMG} alt="" />
             </div>
             <Typography variant="body1" gutterBottom>
               {description}

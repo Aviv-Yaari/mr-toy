@@ -2,18 +2,4 @@
   gap: 20px;
   margin-top: 20px;
   background-color: $clr-subtle2;
-
-  .rating {
-    margin-bottom: 20px;
-  }
-}
-
-.toy-review {
-  .avatar:hover {
-    box-shadow: 0 0 6px 0 rgb(219, 219, 219);
-    transform: scale(105%);
-  }
-  .details {
-    white-space: break-spaces;
-  }
 }

@@ -1,24 +1,27 @@
 import { CircularProgress } from '@material-ui/core';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToyAddEditForm } from '../cmps/toy-add-edit-form';
+import { toyService } from '../services/toy.service';
 import { showUserMsg } from '../store/actions/general.actions';
-import { getToyById, updateToy } from '../store/actions/toy.actions';
 
 export const ToyEdit = props => {
+  const [toy, setToy] = useState(null);
   const dispatch = useDispatch();
-  const toy = useSelector(state => state.toyModule.currToy);
 
   useEffect(() => {
-    const { id } = props.match.params;
-    dispatch(getToyById(id));
-  }, [dispatch, props.match.params]);
+    const loadToy = async () => {
+      const { id } = props.match.params;
+      const toy = await toyService.getToyById(id);
+      setToy(toy);
+    };
+    loadToy();
+  }, [props.match.params]);
 
   const onSaveChanges = async toy => {
     try {
       dispatch(showUserMsg('Updating..'));
-      await dispatch(updateToy(toy));
+      await toyService.update(toy);
       dispatch(showUserMsg('Toy details updated'));
       props.history.push(`/toy/${toy._id}`);
     } catch (err) {

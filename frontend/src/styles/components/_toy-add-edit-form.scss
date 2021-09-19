@@ -1,0 +1,27 @@
+.toy-add-edit {
+  .toy-img {
+    min-height: 200px;
+    &:hover {
+      & img {
+        filter: brightness(80%);
+      }
+    }
+
+    & .btn-upload {
+      position: absolute;
+      background-color: white;
+    }
+
+    & img {
+      max-height: 400px;
+      transition: filter 0.5s;
+    }
+
+    & input[type='file'] {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      cursor: inherit;
+    }
+  }
+}

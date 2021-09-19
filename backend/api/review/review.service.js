@@ -12,10 +12,38 @@ module.exports = {
 
 async function query(filterBy, sortBy) {
   try {
-    const criteria = _buildCriteria(filterBy);
-    const sort = sortBy ? JSON.parse(sortBy) : sortBy;
+    // const criteria = _buildCriteria(filterBy);
+    // const sort = sortBy ? JSON.parse(sortBy) : sortBy;
     const collection = await dbService.getCollection('review');
-    const reviews = await collection.find(criteria).sort(sort).toArray();
+    // const reviews = await collection.find(criteria).sort(sort).toArray();
+    const reviews = await collection
+      .aggregate([
+        {
+          $lookup: {
+            from: 'user',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'user',
+          },
+        },
+        { $unwind: '$user' },
+        {
+          $lookup: {
+            from: 'toy',
+            localField: 'toy',
+            foreignField: '_id',
+            as: 'toy',
+          },
+        },
+        { $unwind: '$toy' },
+        {
+          $project: {
+            toy: { description: 0, price: 0, inStock: 0, labels: 0, createdBy: 0, reviews: 0 },
+            user: { password: 0, email: 0 },
+          },
+        },
+      ])
+      .toArray();
     return reviews;
   } catch (err) {
     logger.error('cannot find reviews', err);
@@ -70,7 +98,7 @@ async function update(review) {
 }
 
 function _buildCriteria(filterBy) {
-  if (!filterBy) return filterBy;
+  if (!filterBy) return {};
   const criteria = JSON.parse(filterBy);
   if (criteria.toy) criteria.toy = ObjectId(criteria.toy);
   return criteria;

@@ -17,6 +17,7 @@ export const ToyAdd = props => {
 
   const onAddToy = async toy => {
     try {
+      console.log(toy);
       dispatch(showUserMsg('Adding..'));
       await dispatch(addToy(toy));
       dispatch(showUserMsg('Toy Added'));

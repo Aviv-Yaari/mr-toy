@@ -1,0 +1,17 @@
+.review-cmp {
+  .avatar:hover {
+    box-shadow: 0 0 6px 0 rgb(219, 219, 219);
+    transform: scale(105%);
+  }
+  .rating {
+    margin-bottom: 20px;
+  }
+  .details {
+    white-space: break-spaces;
+  }
+  .subheader {
+    a {
+      color: inherit;
+    }
+  }
+}
