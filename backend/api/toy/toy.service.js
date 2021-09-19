@@ -95,6 +95,7 @@ async function update(toy) {
 }
 
 function _buildCriteria(filterBy) {
+  if (!filterBy) return filterBy;
   const criteria = JSON.parse(filterBy);
   if (criteria.labels) criteria.labels = { $all: criteria.labels };
   if (criteria.name) {

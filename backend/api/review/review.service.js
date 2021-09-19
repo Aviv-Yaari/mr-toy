@@ -70,6 +70,7 @@ async function update(review) {
 }
 
 function _buildCriteria(filterBy) {
+  if (!filterBy) return filterBy;
   const criteria = JSON.parse(filterBy);
   if (criteria.toy) criteria.toy = ObjectId(criteria.toy);
   return criteria;
