@@ -28,10 +28,15 @@ class _ToyDetails extends Component {
     this.props.getToyById(id);
   };
 
-  onRemoveToy = toy => {
-    this.props.removeToy(toy);
-    this.props.showUserMsg('Toy removed');
-    this.props.history.push('/toy');
+  onRemoveToy = async toy => {
+    try {
+      this.props.showUserMsg('Removing Toy...');
+      await this.props.removeToy(toy);
+      this.props.showUserMsg('Toy removed');
+      this.props.history.push('/toy');
+    } catch (err) {
+      this.props.showUserMsg(err, true);
+    }
   };
 
   onToyEdit = toy => {
@@ -45,7 +50,7 @@ class _ToyDetails extends Component {
       await this.loadToy();
       this.props.showUserMsg('Review added');
     } catch (err) {
-      this.props.showUserMsg('Could not add review', true);
+      this.props.showUserMsg(err, true);
     }
   };
 
@@ -57,7 +62,7 @@ class _ToyDetails extends Component {
       this.props.showUserMsg('Review deleted');
     } catch (err) {
       console.error(err);
-      this.props.showUserMsg('Could not delete review: ' + err.response.data.err || '', true);
+      this.props.showUserMsg(err, true);
     }
   };
 

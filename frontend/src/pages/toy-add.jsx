@@ -23,7 +23,7 @@ export const ToyAdd = props => {
       dispatch(showUserMsg('Toy Added'));
       props.history.push('/toy');
     } catch (err) {
-      dispatch(showUserMsg('Could not add toy', true));
+      dispatch(showUserMsg(err, true));
       console.error(err);
     }
   };

@@ -19,7 +19,7 @@ export const ReviewExplore = props => {
       dispatch(loadReviews());
     } catch (err) {
       console.error(err);
-      dispatch(showUserMsg('Could not delete review: ' + err.response.data.err || '', true));
+      dispatch(showUserMsg(err, true));
     }
   };
 

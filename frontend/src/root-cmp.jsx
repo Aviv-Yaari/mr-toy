@@ -36,8 +36,8 @@ export class _RootCmp extends Component {
     return (
       <main className="main-container">
         <Router>
-          <AppHeader onLogout={this.onLogout} />
           <UserMsg userMsg={userMsg} hideUserMsg={hideUserMsg} />
+          <AppHeader onLogout={this.onLogout} />
           <Switch>
             <Route path="/toy/about" component={About} />
             <Route path="/toy/dashboard" component={ToyDashboard} />

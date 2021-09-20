@@ -21,8 +21,8 @@ export const AppHeader = props => {
         </NavLink>
       </div>
       {isExpanded && (
-        <div className="items flex column">
-          <div className="pages" onClick={() => setIsExpanded(false)}>
+        <div className="items flex column" onClick={() => setIsExpanded(false)}>
+          <div className="pages">
             <NavLink to="/toy/add">
               <Button>Add Toy</Button>
             </NavLink>

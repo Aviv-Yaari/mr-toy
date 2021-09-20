@@ -5,7 +5,7 @@ export const UserMsg = props => {
   const { msg, isError, isOpen } = props.userMsg;
   const { hideUserMsg } = props;
   return (
-    <Snackbar open={isOpen} autoHideDuration={6000} onClose={hideUserMsg}>
+    <Snackbar open={isOpen} autoHideDuration={2000} onClose={hideUserMsg}>
       <MuiAlert
         elevation={6}
         variant="filled"

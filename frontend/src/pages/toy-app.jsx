@@ -23,7 +23,7 @@ class _ToyApp extends Component {
       await this.props.removeToy(toy);
       this.props.showUserMsg('Toy removed');
     } catch (err) {
-      this.props.showUserMsg('Could not remove toy', true);
+      this.props.showUserMsg(err, true);
     }
   };
 

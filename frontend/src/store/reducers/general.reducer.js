@@ -1,22 +1,16 @@
-import _ from 'lodash';
-
 const initialState = {
   userMsg: { isOpen: false, isError: false, msg: '' },
 };
 
 export function generalReducer(state = initialState, action) {
-  const stateCopy = _.cloneDeep(state);
   switch (action.type) {
     case 'SHOW_USER_MSG':
-      stateCopy.userMsg.isOpen = true;
-      stateCopy.userMsg.msg = action.msg || state.userMsg;
-      stateCopy.userMsg.isError = action.isError;
-      break;
+      let { isError, msg } = action;
+      msg = isError ? msg.response.data.err || 'Could not perform action' : msg;
+      return { ...state, userMsg: { isOpen: true, isError, msg } };
     case 'HIDE_USER_MSG':
-      stateCopy.userMsg.isOpen = false;
-      break;
+      return initialState;
     default:
-      break;
+      return state;
   }
-  return stateCopy;
 }

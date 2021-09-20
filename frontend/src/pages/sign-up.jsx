@@ -30,7 +30,7 @@ export const SignUp = () => {
       dispatch(showUserMsg('Signed up successfuly'));
       history.push('/toy');
     } catch (err) {
-      dispatch(showUserMsg(err.response.data.err, true));
+      dispatch(showUserMsg(err, true));
     }
   };
 

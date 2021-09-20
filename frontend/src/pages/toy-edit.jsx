@@ -25,7 +25,7 @@ export const ToyEdit = props => {
       dispatch(showUserMsg('Toy details updated'));
       props.history.push(`/toy/${toy._id}`);
     } catch (err) {
-      dispatch(showUserMsg('Could not update toy. ' + err.response.data.err, true));
+      dispatch(showUserMsg(err, true));
       console.error(err);
       console.dir(err);
     }
