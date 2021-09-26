@@ -14,18 +14,26 @@ import { Popup } from '../cmps/popup';
 import { ChatApp } from '../cmps/chat-app';
 import { ToyReviewAdd } from '../cmps/toy-review-add';
 import { reviewService } from '../services/review.service';
+import { socketService } from '../services/socket.service';
 
 class _ToyDetails extends Component {
-  state = { isEditMode: false };
-  DEFAULT_IMG = 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg';
+  state = { isEditMode: false, chat: { messages: [], typingUsers: [] } };
 
-  componentDidMount() {
-    this.loadToy();
+  async componentDidMount() {
+    await this.loadToy();
+    this.startChat();
+  }
+  componentWillUnmount() {
+    this.terminateChat();
   }
 
-  loadToy = () => {
-    const { id } = this.props.match.params;
-    this.props.getToyById(id);
+  loadToy = async () => {
+    try {
+      const { id } = this.props.match.params;
+      await this.props.getToyById(id);
+    } catch (err) {
+      this.props.showUserMsg('Could not load toy', true);
+    }
   };
 
   onRemoveToy = async toy => {
@@ -66,10 +74,69 @@ class _ToyDetails extends Component {
     }
   };
 
+  // Chat:
+
+  startChat = () => {
+    socketService.setup();
+    socketService.emit('set-user-socket', this.props.user?._id);
+    socketService.emit('toy chat', this.props.toy._id);
+    socketService.on('chat addMsg', this.addMessage);
+    socketService.on('chat addTyping', this.addTyping);
+  };
+
+  terminateChat = () => {
+    // socketService.emit('unset-user-socket', this.props.user._id);
+    socketService.off('chat addMsg', this.addMessage);
+    socketService.terminate();
+  };
+
+  addMessage = message => {
+    this.setState(prevState => ({
+      chat: { ...prevState.chat, messages: [...prevState.chat.messages, message], isTyping: false },
+    }));
+  };
+
+  addTyping = typingUser => {
+    this.setState(prevState => {
+      const { typingUsers } = prevState.chat;
+      const updatedTypingUsers = [...typingUsers];
+      const userIdx = typingUsers.findIndex(user => user === typingUser.userId);
+      if (userIdx === -1) {
+        typingUser.isTyping && updatedTypingUsers.push(typingUser.userId);
+      } else {
+        !typingUser.isTyping && updatedTypingUsers.splice(userIdx, 1);
+      }
+      return {
+        chat: { ...prevState.chat, typingUsers: updatedTypingUsers },
+      };
+    });
+  };
+
+  sendMessage = message => {
+    socketService.emit('chat newMsg', message);
+  };
+
+  onSend = ev => {
+    ev.preventDefault();
+    const { user } = this.props;
+    const text = ev.target.text.value;
+    const from = user.firstName;
+    const message = { text, from };
+    this.sendMessage(message);
+    ev.target.reset();
+    socketService.emit('chat newTyping', false);
+  };
+
+  onTyping = ev => {
+    const message = ev.target.value;
+    socketService.emit('chat newTyping', message ? true : false);
+  };
+
   render() {
-    const { toy } = this.props;
+    const { toy, user } = this.props;
     if (!toy) return <CircularProgress />;
     const { name, description, price, labels, inStock, reviews, img } = toy;
+    const { chat } = this.state;
 
     return (
       <>
@@ -96,9 +163,16 @@ class _ToyDetails extends Component {
             {reviews && <ToyReviewList reviews={reviews} onRemoveReview={this.onRemoveReview} />}
           </section>
         </main>
-        <Popup icon={<ChatIcon />}>
-          <ChatApp />
-        </Popup>
+        {user && (
+          <Popup icon={<ChatIcon />}>
+            <ChatApp
+              onSend={this.onSend}
+              onTyping={this.onTyping}
+              messages={chat.messages}
+              typingUsers={chat.typingUsers}
+            />
+          </Popup>
+        )}
       </>
     );
   }
@@ -107,7 +181,8 @@ class _ToyDetails extends Component {
 const mapStateToProps = state => {
   const { currToy: toy } = state.toyModule;
   const { reviews } = state.reviewModule;
-  return { toy, reviews };
+  const { user } = state.userModule;
+  return { toy, reviews, user };
 };
 
 const mapDispatchToProps = {

@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const expressSession = require('express-session');
+const { connectSockets } = require('./services/socket.service');
 
 const app = express();
 const http = require('http').createServer(app);
@@ -18,6 +19,7 @@ const session = expressSession({
 app.use(express.json());
 app.use(session);
 app.use(express.static('public'));
+connectSockets(http, session);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'public')));
