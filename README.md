@@ -5,4 +5,4 @@ Backend built using nodejs, expressjs.\
 Database: Mongodb.\
 Every "toy details" page features a chat (toy-specific), using websockets.\
 Heroku deployment:\
-https://aviv-mr-toy.herokuapp.com/
+https://aviv-mr-toy.herokuapp.com/toy
