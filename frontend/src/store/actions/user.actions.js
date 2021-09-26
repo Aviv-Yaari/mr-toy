@@ -19,7 +19,7 @@ export const setUser = user => {
 };
 
 export const loadUserFromStorage = () => {
-  return dispatch => {
+  return async dispatch => {
     const user = authService.loadFromStorage();
     if (user) dispatch({ type: 'SET_USER', user });
   };

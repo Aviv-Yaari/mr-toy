@@ -70,7 +70,8 @@ class _ToyApp extends Component {
 
 const mapStateToProps = state => {
   const { toys, filter, sort } = state.toyModule;
-  return { toys, filter, sort };
+  const { user } = state.userModule;
+  return { toys, filter, sort, user };
 };
 
 const mapDispatchToProps = {

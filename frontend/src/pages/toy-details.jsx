@@ -32,7 +32,7 @@ class _ToyDetails extends Component {
       const { id } = this.props.match.params;
       await this.props.getToyById(id);
     } catch (err) {
-      this.props.showUserMsg('Could not load toy', true);
+      window.location = '/toy';
     }
   };
 
@@ -77,8 +77,6 @@ class _ToyDetails extends Component {
   // Chat:
 
   startChat = () => {
-    socketService.setup();
-    socketService.emit('set-user-socket', this.props.user?._id);
     socketService.emit('toy chat', this.props.toy._id);
     socketService.on('chat addMsg', this.addMessage);
     socketService.on('chat addTyping', this.addTyping);
@@ -87,7 +85,7 @@ class _ToyDetails extends Component {
   terminateChat = () => {
     // socketService.emit('unset-user-socket', this.props.user._id);
     socketService.off('chat addMsg', this.addMessage);
-    socketService.terminate();
+    socketService.off('chat addTyping', this.addTyping);
   };
 
   addMessage = message => {

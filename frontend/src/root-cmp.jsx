@@ -18,10 +18,15 @@ import { ToyAdd } from './pages/toy-add';
 import { ToyEdit } from './pages/toy-edit';
 import { UserDetails } from './pages/user-details';
 import { ReviewExplore } from './pages/review-explore';
+import { socketService } from './services/socket.service';
 
 export class _RootCmp extends Component {
-  componentDidMount() {
-    this.props.loadUserFromStorage();
+  async componentDidMount() {
+    await this.props.loadUserFromStorage();
+  }
+
+  componentWillUnmount() {
+    socketService.terminate();
   }
 
   onLogout = () => {
